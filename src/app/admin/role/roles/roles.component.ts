@@ -7,8 +7,7 @@ import { Constants } from '../../../shared/constants';
 
 @Component({
   selector: 'app-roles',
-  templateUrl: './roles.component.html',
-  styleUrls: ['./roles.component.css']
+  templateUrl: './roles.component.html'
 })
 export class RolesComponent implements OnInit {
 

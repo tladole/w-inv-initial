@@ -14,8 +14,7 @@ import { AgDateGenEditorComponent } from '../../shared/component/ag-date-gen-edi
 
 @Component({
   selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css']
+  templateUrl: './products.component.html'
 })
 export class ProductsComponent implements OnInit {
   gridOptions: GridOptions = {

@@ -3,8 +3,7 @@ import { ICellEditorAngularComp } from "ag-grid-angular";
 
 @Component({
   selector: 'app-ag-dropdown-gen-editor',
-  templateUrl: './ag-dropdown-gen-editor.component.html',
-  styleUrls: ['./ag-dropdown-gen-editor.component.css']
+  templateUrl: './ag-dropdown-gen-editor.component.html'
 })
 export class AgDropdownGenEditorComponent implements ICellEditorAngularComp, AfterViewInit {
   private params: any;

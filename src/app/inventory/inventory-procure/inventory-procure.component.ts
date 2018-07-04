@@ -9,8 +9,7 @@ import { Constants } from '../../shared/constants';
 
 @Component({
   selector: 'app-inventory-procure',
-  templateUrl: './inventory-procure.component.html',
-  styleUrls: ['./inventory-procure.component.css']
+  templateUrl: './inventory-procure.component.html'
 })
 export class InventoryProcureComponent implements OnInit {
   prods: ProcurementSetView;

@@ -3,8 +3,7 @@ import { ICellEditorAngularComp } from 'ag-grid-angular';
 
 @Component({
   selector: 'app-ag-date-gen-editor',
-  templateUrl: './ag-date-gen-editor.component.html',
-  styleUrls: ['./ag-date-gen-editor.component.css']
+  templateUrl: './ag-date-gen-editor.component.html'
 })
 export class AgDateGenEditorComponent implements ICellEditorAngularComp  {
 

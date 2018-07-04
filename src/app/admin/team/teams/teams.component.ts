@@ -6,8 +6,7 @@ import { Constants } from '../../../shared/constants';
 
 @Component({
   selector: 'app-teams',
-  templateUrl: './teams.component.html',
-  styleUrls: ['./teams.component.css']
+  templateUrl: './teams.component.html'
 })
 export class TeamsComponent implements OnInit {
 

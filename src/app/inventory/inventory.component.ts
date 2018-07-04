@@ -7,8 +7,7 @@ import { DropdownField } from '../shared/model/dropdown-key.model';
 
 @Component({
   selector: 'app-inventory',
-  templateUrl: './inventory.component.html',
-  styleUrls: ['./inventory.component.css']
+  templateUrl: './inventory.component.html'
 })
 export class InventoryComponent implements OnInit {
   columnDefs = [

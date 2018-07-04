@@ -7,8 +7,7 @@ import { User } from '../../shared/model/admin/user.model';
 
 @Component({
   selector: 'app-mission-details',
-  templateUrl: './mission-details.component.html',
-  styleUrls: ['./mission-details.component.css']
+  templateUrl: './mission-details.component.html'
 })
 export class MissionDetailsComponent implements OnInit {
   role: MissionView;

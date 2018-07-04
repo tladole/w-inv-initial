@@ -7,8 +7,7 @@ import { DropdownField } from '../../shared/model/dropdown-key.model';
 
 @Component({
   selector: 'app-product-category',
-  templateUrl: './product-category.component.html',
-  styleUrls: ['./product-category.component.css']
+  templateUrl: './product-category.component.html'
 })
 export class ProductCategoryComponent implements OnInit {
   catagoryId: number;

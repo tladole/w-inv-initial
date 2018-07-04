@@ -7,8 +7,7 @@ import { Constants } from '../../../shared/constants';
 
 @Component({
   selector: 'app-team-details',
-  templateUrl: './team-details.component.html',
-  styleUrls: ['./team-details.component.css']
+  templateUrl: './team-details.component.html'
 })
 export class TeamDetailsComponent implements OnInit {
   team: Team;

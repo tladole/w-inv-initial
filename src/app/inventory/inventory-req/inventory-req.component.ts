@@ -6,8 +6,7 @@ import { Constants } from '../../shared/constants';
 
 @Component({
   selector: 'app-inventory-req',
-  templateUrl: './inventory-req.component.html',
-  styleUrls: ['./inventory-req.component.css']
+  templateUrl: './inventory-req.component.html'
 })
 export class InventoryReqComponent implements OnInit {
   prod: Inventory;

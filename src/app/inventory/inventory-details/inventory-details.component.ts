@@ -14,8 +14,7 @@ import { AgDropdownGenEditorComponent } from '../../shared/component/ag-dropdown
 
 @Component({
   selector: 'app-inventory-details',
-  templateUrl: './inventory-details.component.html',
-  styleUrls: ['./inventory-details.component.css']
+  templateUrl: './inventory-details.component.html'
 })
 export class InventoryDetailsComponent implements OnInit {
   prod: Inventory;

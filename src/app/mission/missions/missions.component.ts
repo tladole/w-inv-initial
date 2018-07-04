@@ -13,8 +13,7 @@ import { AuthService } from '../../shared/service/auth.service';
 
 @Component({
   selector: 'app-missions',
-  templateUrl: './missions.component.html',
-  styleUrls: ['./missions.component.css']
+  templateUrl: './missions.component.html'
 })
 export class MissionsComponent implements OnInit {
   columnDefs: ColDef[] = [
