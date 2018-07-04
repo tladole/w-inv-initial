@@ -1,0 +1,33 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Set</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="row" style="margin-bottom: 5px">
+        <label for="SetName" class="col-sm-2 col-form-label">Set Name:</label>
+        <div class="col-sm-4">
+            <input type="text" name="SetName" class="form-control" [(ngModel)]="prod.SetName" required>
+        </div>
+        <div class="valid-feedback col-sm-4" [style.display]="prod.ProductName?'block':'none'">
+            Looks good!
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <ag-grid-angular style="width: 100%; height: 250px;" rowSelection="multiple" (gridReady)="onProdGridReady($event)" class="ag-theme-balham" [enableSorting]="true" [rowData]="category" [columnDefs]="columnDefs">
+            </ag-grid-angular>
+        </div>
+        <div class="col-1">
+
+        </div>
+        <div class="col-7">
+            <ag-grid-angular style="width: 100%; height: 250px;" rowSelection="multiple" (gridReady)="onInvGridReady($event)" class="ag-theme-balham" [enableSorting]="true" [rowData]="category" [columnDefs]="columnDefs">
+            </ag-grid-angular>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <input type="button" title="Add" class="btn btn-primary" value="Save" (click)="addRow()">
+</div>

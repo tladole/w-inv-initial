@@ -1,0 +1,23 @@
+<div class="container-fluid" *ngIf="unitofpacking && category && country">
+    <div class="row" style="margin-bottom: 5px">
+        <div class="col-md-3 mr-auto">
+            <input type="text" class="form-control" (input)="onQuickFilterChanged($event)" id="quickFilter" placeholder="quick filter...">
+        </div>
+        <div class="pull-right col-md-1" *ngIf="gridApi && gridApi.getSelectedRows().length > 0">
+            <input type="button" title="Add" class="form-control btn-secondary" value="Addition" (click)="updateOther()">
+        </div>
+        <div class="pull-right col-md-1">
+            <input type="button" title="Bulk Save" class="form-control btn-secondary" value="Bulk Save" (click)="saveAll()">
+        </div>
+        <div class="pull-right col-md-1">
+            <input type="button" title="Add" class="form-control btn-primary" value="Add" routerLink="/products/add">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <ag-grid-angular style="width: 100%; height: 350px;" [rowDeselection]="true" [pagination]="true" (gridReady)="onGridReady($event)" class="ag-theme-balham" [enableSorting]="true" [rowSelection]="rowSelection" [rowData]="rowData" [columnDefs]="columnDefs"
+                paginationPageSize=10>
+            </ag-grid-angular>
+        </div>
+    </div>
+</div>

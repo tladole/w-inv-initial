@@ -1,0 +1,158 @@
+<div class="container-fluid">
+    <div class="row" style="margin-bottom: 5px">
+        <div class="col-md-5 mr-auto">
+            <h4>{{activeRoute.routeConfig.path.endsWith('/add') ? ('Add Product: ' + (prod.ProductName ? prod.ProductName : '')) : 'Product: ' + prod.ProductName}}</h4>
+        </div>
+        <div class="pull-right col-md-1">
+            <input type="button" title="Back" class="form-control btn-primary" value="Back" routerLink="/products">
+        </div>
+    </div>
+    <form #ngaForm='ngForm' class="needs-validation" (ngSubmit)="saveProduct()" novalidate>
+        <div class="form-row mb-2">
+            <label for="ProductName" class="col-sm-2 col-form-label">Product Name:</label>
+            <div class="col-sm-4">
+                <input type="text" name="ProductName" class="form-control" [(ngModel)]="prod.ProductName" required>
+            </div>
+            <div class="valid-feedback col-sm-4" [style.display]="prod.ProductName?'block':'none'">
+                Looks good!
+            </div>
+        </div>
+        <div class="form-row mb-2">
+            <label for="Category" class="col-sm-2 col-form-label">Category:</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="Category" [(ngModel)]="prod.CategoryId" required>
+                        <option [value]="undefined" disabled>Select</option>
+                    <option *ngFor="let t of category" [value]='t.id'>{{t.Name}}</option>
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <button class="btn btn-secondary" type="button" (click)="addCategory()">Add Category</button>
+            </div>
+        </div>
+        <div class="form-row mb-2">
+            <label for="UnitOfPackaging" class="col-sm-2 col-form-label">Unit Of Packaging:</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="UnitOfPackaging" [(ngModel)]="prod.UnitOfPackagingId" required>
+                        <option [value]="undefined" disabled>Select</option>
+                    <option *ngFor="let t of unitofpacking" [value]='t.id'>{{t.Name}}</option>
+                </select>
+            </div>
+            <div class="valid-feedback col-sm-4" [style.display]="prod.UnitOfPackagingId?'block':'none'">
+                Looks good!
+            </div>
+        </div>
+        <div class="form-row mb-2">
+            <label for="UnitsPerPackage" class="col-sm-2 col-form-label">Units Per Package:</label>
+            <div class="col-sm-4">
+                <input type="text" name="UnitsPerPackage" class="form-control" [(ngModel)]="prod.UnitsPerPackage" required>
+            </div>
+            <div class="valid-feedback col-sm-4" [style.display]="prod.UnitsPerPackage?'block':'none'">
+                Looks good!
+            </div>
+        </div>
+        <div class="form-row mb-2">
+            <label for="ExpirationDate" class="col-sm-2 col-form-label">Expiration Date:</label>
+            <div class="col-sm-4">
+                <input type="date" name="ExpirationDate" class="form-control" [(ngModel)]="prod.ExpirationDate">
+            </div>
+            <div class="valid-feedback col-sm-4" [style.display]="prod.ExpirationDate?'block':'none'">
+                Looks good!
+            </div>
+        </div>
+        <div class="form-row mb-2">
+            <label for="ValuePerPackage" class="col-sm-2 col-form-label">Value Per Package:</label>
+            <div class="col-sm-4">
+                <input type="text" name="ValuePerPackage" class="form-control" [(ngModel)]="prod.ValuePerPackage" required>
+            </div>
+            <div class="valid-feedback col-sm-4" [style.display]="prod.ValuePerPackage?'block':'none'">
+                Looks good!
+            </div>
+        </div>
+        <div class="form-row mb-2">
+            <label for="Manufacturer" class="col-sm-2 col-form-label">Manufacturer:</label>
+            <div class="col-sm-4">
+                <input type="text" name="Manufacturer" class="form-control" [(ngModel)]="prod.Manufacturer" required>
+            </div>
+            <div class="valid-feedback col-sm-4" [style.display]="prod.Manufacturer?'block':'none'">
+                Looks good!
+            </div>
+        </div>
+        <div class="form-row mb-2">
+            <label for="ProductCode" class="col-sm-2 col-form-label">Product Code:</label>
+            <div class="col-sm-4">
+                <input type="text" name="ProductCode" class="form-control" [(ngModel)]="prod.ProductCode" required>
+            </div>
+            <div class="valid-feedback col-sm-4" [style.display]="prod.ProductCode?'block':'none'">
+                Looks good!
+            </div>
+        </div>
+        <div class="form-row mb-2">
+            <label for="Lot" class="col-sm-2 col-form-label">Product Lot:</label>
+            <div class="col-sm-4">
+                <input type="text" name="Lot" class="form-control" [(ngModel)]="prod.Lot">
+            </div>
+            <div class="valid-feedback col-sm-4" [style.display]="prod.Lot?'block':'none'">
+                Looks good!
+            </div>
+        </div>
+        <div class="form-row mb-2">
+            <label for="CountryOfOrigin" class="col-sm-2 col-form-label">Country Of Origin:</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="CountryOfOrigin" [(ngModel)]="prod.CountryOfOriginId" required>
+                        <option [value]="undefined" disabled>Select</option>
+                        <option *ngFor="let t of country" [value]='t.id'>{{t.Name}}</option>
+                              </select>
+            </div>
+            <div class="valid-feedback col-sm-4" [style.display]="prod.CountryOfOriginId?'block':'none'">
+                Looks good!
+            </div>
+        </div>
+        <div class="form-row mb-2">
+            <label for="Set" class="col-sm-2 col-form-label">Product Set:</label>
+            <div class="col-sm-4 bg-light">
+                <span class="badge badge-secondary" style="vertical-align: -webkit-baseline-middle" *ngFor="let a of productset">{{a.Name}}</span>
+            </div>
+            <div class="col-sm-4">
+                <button class="btn btn-secondary" type="button" (click)="addSet()">Add Set</button>
+            </div>
+        </div>
+        <div class="form-row mb-2">
+            <label for="BarcodeImage" class="col-sm-2 col-form-label">Barcode Image:</label>
+            <div class="col-sm-4">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="barcodeImage" (change)="onProductBarcodeFileChange($event)" #barcodeFileInput>
+                    <label class="custom-file-label" for="barcodeImage">Choose file</label>
+                </div>
+            </div>
+            <div class="col-sm-4" *ngIf="prod.BarcodeImage">
+                <img [src]="prod.BarcodeImage" height="20px" (click)="open(prod.BarcodeImage)">
+            </div>
+        </div>
+        <div class="form-row mb-2">
+            <label for="Lot" class="col-sm-2 col-form-label">Product image:</label>
+            <div class="col-sm-4">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="productImage" (change)="onProductImageFileChange($event)" #imageFileInput>
+                    <label class="custom-file-label" for="productImage">Choose file</label>
+                </div>
+            </div>
+            <div class="col-sm-4" *ngIf="prod.Productimage">
+                <img [src]="prod.Productimage" height="20px" (click)="open(prod.Productimage)">
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px">
+            <div class="col-sm-1">
+                <button class="btn btn-primary" [disabled]="!ngaForm.form.valid" type="submit">Save</button>
+            </div>
+            <div class="col-sm-1" *ngIf="activeRoute.routeConfig.path.endsWith('/add')">
+                <button class="btn btn-secondary" type="button" (click)="ngaForm.reset();cancelAll();"> Cancel</button>
+            </div>
+            <div class="col-sm-1" *ngIf="!activeRoute.routeConfig.path.endsWith('/add')">
+                <button class="btn btn-secondary" type="button" (click)="cancelAll();"> Reset</button>
+            </div>
+            <div class="col-sm-1" *ngIf="!activeRoute.routeConfig.path.endsWith('/add')">
+                <button class="btn btn-secondary" type="button" (click)="deleteProd()">Delete</button>
+            </div>
+        </div>
+    </form>
+</div>
