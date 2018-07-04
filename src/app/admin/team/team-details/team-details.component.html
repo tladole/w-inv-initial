@@ -1,0 +1,59 @@
+<div class="container-fluid" *ngIf="team">
+    <div class="row" style="margin-bottom: 5px">
+        <div class="col-md-3 mr-auto">
+            <h4>Team: </h4>
+        </div>
+        <div class="pull-right col-md-1">
+            <input type="button" title="Back" class="form-control btn-primary" value="Back" routerLink="/admin/teams">
+        </div>
+    </div>
+    <form #ngaForm='ngForm' class="needs-validation" (ngSubmit)="saveTeam()" novalidate>
+        <div class="form-row mb-2">
+            <label for="TeamName" class="col-sm-2 col-form-label">Team Name:</label>
+            <div class="col-sm-4">
+                <input type="text" name="TeamName" class="form-control" [(ngModel)]="team.TeamName" required>
+            </div>
+            <div class="valid-feedback col-sm-4" [style.display]="team.TeamName?'block':'none'">
+                Looks good!
+            </div>
+        </div>
+        <div class="form-row mb-2">
+            <label for="TeamLead" class="col-sm-2 col-form-label">Team Lead:</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="TeamLead" [(ngModel)]="team.TeamLead">
+                        <option value="" disabled selected>Select</option>
+                          <option *ngFor="let u of users" [value]='u.id'>{{u.UserName}}</option>
+                        </select>
+            </div>
+            <div class="valid-feedback col-sm-4" [style.display]="team.TeamLead?'block':'none'">
+                Looks good!
+            </div>
+        </div>
+        <div class="form-row mb-2" *ngIf="team.id != -1 && team.CreatedBy">
+            <label for="TotalPackagesAvailable" class="col-sm-2 col-form-label">Create By:</label>
+            <div class="col-sm-4">
+                <input type="text" name="TotalPackagesAvailable" class="form-control" [ngModel]="team.CreatedBy.UserName" readonly>
+            </div>
+        </div>
+        <div class="form-row mb-2" *ngIf="team.id != -1 && team.CreatedDate">
+            <label for="TotalPackagesOutstanding" class="col-sm-2 col-form-label">Created Date:</label>
+            <div class="col-sm-4">
+                <input type="text" name="TotalPackagesOutstanding" class="form-control" [ngModel]="team.CreatedDate | date:'yyyy-MM-dd'" readonly>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px">
+            <div class="col-sm-1">
+                <button class="btn btn-primary" [disabled]="!ngaForm.form.valid" type="submit">Save</button>
+            </div>
+            <div class="col-sm-1" *ngIf="activeRoute.routeConfig.path.endsWith('/add')">
+                <button class="btn btn-secondary" type="button" (click)="ngaForm.reset();cancelAll();"> Cancel</button>
+            </div>
+            <div class="col-sm-1" *ngIf="!activeRoute.routeConfig.path.endsWith('/add')">
+                <button class="btn btn-secondary" type="button" (click)="cancelAll();"> Reset</button>
+            </div>
+            <div class="col-sm-1" *ngIf="!activeRoute.routeConfig.path.endsWith('/add')">
+                <button class="btn btn-secondary" type="button" (click)="deleteTeam()">Delete</button>
+            </div>
+        </div>
+    </form>
+</div>

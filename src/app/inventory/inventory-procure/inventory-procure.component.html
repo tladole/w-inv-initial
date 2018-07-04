@@ -1,0 +1,103 @@
+<div class="container-fluid" *ngIf="category && unitofpacking && products && teams">
+    <form #ngaForm='ngForm' class="needs-validation" (ngSubmit)="saveProduct()" novalidate>
+        <div class="row" style="margin-bottom: 5px">
+            <div class="col-md-3 mr-auto">
+                <h4>Inventory to Procure: </h4>
+            </div>
+            <div class="pull-right col-md-2">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="button" title="Add" class="form-control btn-primary" value="Add" (click)="addInv()">
+                    </div>
+                    <div class="col-md-6">
+                        <input type="button" title="Back" class="form-control btn-secondary" value="Back" routerLink="/inventory">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row mb-12">
+            <div class="col-sm-2">
+                <label>Category</label>
+            </div>
+            <div class="col-sm-2">
+                <label>Unit Of Packaging</label>
+            </div>
+            <div class="col-sm-2">
+                <label>Product</label>
+            </div>
+            <div class="col-sm-2">
+                <label>Total Needed</label>
+            </div>
+            <div class="col-sm-2">
+                <label>Total Outstanding</label>
+            </div>
+            <div class="col-sm-2">
+                <label>Department</label>
+            </div>
+        </div>
+        <div *ngFor="let prod1 of prods.procuments">
+            <div class="form-row mb-12 mb-2" *ngIf="prod1.orderNo == 0">
+                <div class="col-sm-2">
+                    <select class="form-control" [(ngModel)]="prod1.CategoryId" [ngModelOptions]="{standalone: true}" required>
+                            <option [value]="undefined" disabled>Select</option>
+                            <option *ngFor="let t of category" [value]='t.id'>{{t.Name}}</option>
+                      </select>
+                </div>
+                <div class="col-sm-2">
+                    <select class="form-control" [(ngModel)]="prod1.UnitOfPackagingId" [ngModelOptions]="{standalone: true}" required>
+                            <option [value]="undefined" disabled>Select</option>
+                            <option *ngFor="let t of unitofpacking" [value]='t.id'>{{t.Name}}</option>
+                              </select>
+                </div>
+                <div class="col-sm-2">
+                    <select class="form-control" [(ngModel)]="prod1.productId" [ngModelOptions]="{standalone: true}" required>
+                            <option [value]="undefined" disabled>Select</option>
+                            <option *ngFor="let t of products | filter : {'CategoryId': prod1.CategoryId,'UnitOfPackagingId':prod1.UnitOfPackagingId}" [value]='t.id'>{{t.ProductName}}</option>
+                          </select>
+                </div>
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" [(ngModel)]="prod1.inventory.TotalPackagesNeeded" [ngModelOptions]="{standalone: true}">
+                </div>
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" [ngModel]="prod1.inventory.TotalPackagesOutstanding" [ngModelOptions]="{standalone: true}" readonly>
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-secondary" type="button" (click)="AddTeam(prod1);"> Add Team</button>
+                </div>
+            </div>
+            <div class="form-row mb-2" *ngIf="prod1.orderNo > 0">
+                <div class="col-sm-2">
+                </div>
+                <div class="col-sm-2">
+                </div>
+                <div class="col-sm-2">
+                </div>
+                <div class="col-sm-2">
+                </div>
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" (change)="onChange($event, prod1)">
+                </div>
+                <div class="col-sm-2">
+                    <select class="form-control" [(ngModel)]="prod1.Department" [ngModelOptions]="{standalone: true}" required>
+                            <option [value]="undefined" disabled>Select</option>
+                            <option *ngFor="let t of teams" [value]='t.id'>{{t.TeamName}}</option>
+                          </select>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px">
+            <div class="col-sm-1">
+                <button class="btn btn-primary" [disabled]="!ngaForm.form.valid" type="submit">Save</button>
+            </div>
+            <div class="col-sm-1" *ngIf="activeRoute.routeConfig.path.endsWith('/add')">
+                <button class="btn btn-secondary" type="button" (click)="ngaForm.reset();cancelAll();"> Cancel</button>
+            </div>
+            <div class="col-sm-1" *ngIf="!activeRoute.routeConfig.path.endsWith('/add')">
+                <button class="btn btn-secondary" type="button" (click)="cancelAll();"> Reset</button>
+            </div>
+            <div class="col-sm-1" *ngIf="!activeRoute.routeConfig.path.endsWith('/add')">
+                <button class="btn btn-secondary" type="button" (click)="deleteProd()">Delete</button>
+            </div>
+        </div>
+    </form>
+</div>

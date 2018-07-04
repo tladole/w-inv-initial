@@ -1,0 +1,93 @@
+<div class="container-fluid" *ngIf="user">
+    <div class="row" style="margin-bottom: 5px">
+        <div class="col-md-3 mr-auto">
+            <h4>User: </h4>
+        </div>
+        <div class="pull-right col-md-1">
+            <input type="button" title="Back" class="form-control btn-primary" value="Back" routerLink="/admin/users">
+        </div>
+    </div>
+    <form #ngaForm='ngForm' class="needs-validation" (ngSubmit)="saveUser()" novalidate>
+        <div class="form-row mb-2">
+            <label for="UserName" class="col-sm-2 col-form-label">User Name:</label>
+            <div class="col-sm-4">
+                <input type="text" name="UserName" class="form-control" [(ngModel)]="user.UserName" required>
+            </div>
+            <div class="valid-feedback col-sm-4" [style.display]="user.UserName?'block':'none'">
+                Looks good!
+            </div>
+        </div>
+        <div class="form-row mb-2" *ngIf="user.id == -1">
+            <label for="Password" class="col-sm-2 col-form-label">Password:</label>
+            <div class="col-sm-4">
+                <input type="password" name="Password" class="form-control" [(ngModel)]="userPassword" required>
+            </div>
+            <div class="valid-feedback col-sm-4" [style.display]="user.Password?'block':'none'">
+                Looks good!
+            </div>
+        </div>
+        <div class="form-row mb-2">
+            <label for="Active" class="col-sm-2 col-form-label">Is Active:</label>
+            <div class="col-sm-4">
+                <input type="checkbox" name="Active" class="btn-control" [(ngModel)]="user.Active" required>
+            </div>
+            <div class="valid-feedback col-sm-4" [style.display]="user.Active?'block':'none'">
+                Looks good!
+            </div>
+        </div>
+        <div class="form-row mb-2">
+            <label for="Team" class="col-sm-2 col-form-label">Team:</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="Team" [(ngModel)]="user.Team" multiple>
+                        <option *ngFor="let t of teams" [value]='t.id'>{{t.TeamName}}</option>
+                      </select>
+            </div>
+            <div class="valid-feedback col-sm-4" [style.display]="user.Team?'block':'none'">
+                Looks good!
+            </div>
+        </div>
+        <div class="form-row mb-2">
+            <label for="Roles" class="col-sm-2 col-form-label">Roles:</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="Roles" [(ngModel)]="user.Roles" multiple>
+                        <option *ngFor="let t of roles" [value]='t.id'>{{t.RoleName}}</option>
+                      </select>
+            </div>
+            <div class="valid-feedback col-sm-4" [style.display]="user.Roles?'block':'none'">
+                Looks good!
+            </div>
+        </div>
+        <div class="form-row mb-2" *ngIf="user.id != -1">
+            <label for="LastLoggedIn" class="col-sm-2 col-form-label">Last LoggedIn Date:</label>
+            <div class="col-sm-4">
+                <input type="text" name="LastLoggedIn" class="form-control" [ngModel]="user.LastLoggedIn | date:'yyyy-MM-dd'" readonly>
+            </div>
+        </div>
+        <div class="form-row mb-2" *ngIf="user && user.id != -1 && user.CreatedBy">
+            <label for="CratedBy" class="col-sm-2 col-form-label">Create By:</label>
+            <div class="col-sm-4">
+                <input type="text" name="CratedBy" class="form-control" [ngModel]="user.CreatedBy.UserName" readonly>
+            </div>
+        </div>
+        <div class="form-row mb-2" *ngIf="user.id != -1">
+            <label for="CratedDate" class="col-sm-2 col-form-label">Created Date:</label>
+            <div class="col-sm-4">
+                <input type="text" name="CratedDate" class="form-control" [ngModel]="user.CreatedDate | date:'yyyy-MM-dd'" readonly>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px">
+            <div class="col-sm-1">
+                <button class="btn btn-primary" [disabled]="!ngaForm.form.valid" type="submit">Save</button>
+            </div>
+            <div class="col-sm-1" *ngIf="activeRoute.routeConfig.path.endsWith('/add')">
+                <button class="btn btn-secondary" type="button" (click)="ngaForm.reset();cancelAll();"> Cancel</button>
+            </div>
+            <div class="col-sm-1" *ngIf="!activeRoute.routeConfig.path.endsWith('/add')">
+                <button class="btn btn-secondary" type="button" (click)="cancelAll();"> Reset</button>
+            </div>
+            <div class="col-sm-1" *ngIf="!activeRoute.routeConfig.path.endsWith('/add')">
+                <button class="btn btn-secondary" type="button" (click)="deleteUser()">Delete</button>
+            </div>
+        </div>
+    </form>
+</div>

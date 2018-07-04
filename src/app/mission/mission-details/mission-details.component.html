@@ -1,0 +1,56 @@
+<div class="container-fluid" *ngIf="role">
+    <div class="row" style="margin-bottom: 5px">
+        <div class="col-md-3 mr-auto">
+            <h4>Role: </h4>
+        </div>
+        <div class="pull-right col-md-1">
+            <input type="button" title="Back" class="form-control btn-primary" value="Back" routerLink="/admin/mission">
+        </div>
+    </div>
+    <form #ngaForm='ngForm' class="needs-validation" (ngSubmit)="saveRole()" novalidate>
+        <div class="form-row mb-2">
+            <label for="name" class="col-sm-2 col-form-label">Name:</label>
+            <div class="col-sm-4">
+                <input type="text" name="name" class="form-control" [(ngModel)]="role.name" required>
+            </div>
+            <div class="valid-feedback col-sm-4" [style.display]="role.name?'block':'none'">
+                Looks good!
+            </div>
+        </div>
+        <div class="form-row mb-2">
+            <label for="location" class="col-sm-2 col-form-label">Location:</label>
+            <div class="col-sm-4">
+                <input type="text" name="location" class="form-control" [(ngModel)]="role.location" required>
+            </div>
+            <div class="valid-feedback col-sm-4" [style.display]="role.location?'block':'none'">
+                Looks good!
+            </div>
+        </div>
+        <div class="form-row mb-2" *ngIf="role.id != -1 && role.modifiedBy">
+            <label for="TotalPackagesAvailable" class="col-sm-2 col-form-label">Modified By:</label>
+            <div class="col-sm-4">
+                <input type="text" name="TotalPackagesAvailable" class="form-control" [ngModel]="role.modifiedBy.UserName" readonly>
+            </div>
+        </div>
+        <div class="form-row mb-2" *ngIf="role.id != -1 && role.modifiedDate">
+            <label for="modifiedDate" class="col-sm-2 col-form-label">Modified Date:</label>
+            <div class="col-sm-4">
+                <input type="text" name="modifiedDate" class="form-control" [ngModel]="role.modifiedDate | date:'yyyy-MM-dd'" readonly>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px">
+            <div class="col-sm-1">
+                <button class="btn btn-primary" [disabled]="!ngaForm.form.valid" type="submit">Save</button>
+            </div>
+            <div class="col-sm-1" *ngIf="activeRoute.routeConfig.path.endsWith('/add')">
+                <button class="btn btn-secondary" type="button" (click)="ngaForm.reset();cancelAll();"> Cancel</button>
+            </div>
+            <div class="col-sm-1" *ngIf="!activeRoute.routeConfig.path.endsWith('/add')">
+                <button class="btn btn-secondary" type="button" (click)="cancelAll();"> Reset</button>
+            </div>
+            <div class="col-sm-1" *ngIf="!activeRoute.routeConfig.path.endsWith('/add')">
+                <button class="btn btn-secondary" type="button" (click)="deleteRole()">Delete</button>
+            </div>
+        </div>
+    </form>
+</div>

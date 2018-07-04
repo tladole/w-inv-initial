@@ -1,0 +1,56 @@
+<div id="app_container">
+    <ng2-toasty></ng2-toasty>
+    <div class='container-fluid'>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" routerLink="/">
+                <img alt="logo" [src]="appLogo" style="margin:-5px;height: 50px">
+                <span class="app-component appTitle"></span>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+            <div class="navbar-collapse collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto" *ngIf="authService.isUserLoggedIn ">
+                    <li routerLinkActive="active" class="nav-item" [routerLinkActiveOptions]="{ exact: true }"><a class="nav-link" routerLink=""><span class="glyphicon glyphicon-home"></span></a></li>
+                    <li class="dropdown" *ngIf="authService.isUserAdmin " title="Admin">
+                        <a class="nav-link" data-toggle="dropdown" href="#">Admin <span class="caret"></span></a>
+                        <ul class="dropdown-menu bg-dark">
+                            <li routerLinkActive="active" class="dropdown-item"><a class="nav-link" routerLink="/admin/mission">Mission</a></li>
+                            <li routerLinkActive="active" class="dropdown-item"><a class="nav-link" routerLink="/admin/roles">Roles</a></li>
+                            <li routerLinkActive="active" class="dropdown-item"><a class="nav-link" routerLink="/admin/teams">Teams</a></li>
+                            <li routerLinkActive="active" class="dropdown-item"><a class="nav-link" routerLink="/admin/users">Users</a></li>
+                        </ul>
+                    </li>
+                    <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="/products">Products</a></li>
+                    <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="/inventory">Procurement</a></li>
+                    <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="/orders">Inventory</a></li>
+                    <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="/reports">Reports</a></li>
+                    <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="/about">About</a></li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <ul class="app-component nav navbar-nav nav-pills navBarPadding navbar-right" *ngIf="authService.isUserLoggedIn ">
+                        <li style="text-align: right;">
+                            <a href="javascript:; " (click)="logout()"><span class="glyphicon glyphicon-log-out "></span> Logout</a>
+                            <div *ngIf="missionName"><span style="color: white;"><b>Mission: </b>{{missionName.name}}</span></div>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </nav>
+        <div style="margin-top: 15px">
+            <router-outlet></router-outlet>
+        </div>
+        <div id="footer">
+            <div class="app-component navbar-inner footer ">
+                <div class="container-fluid navbar-inverse">
+                    <footer>
+                        <div class="app-component vcenter_text center-block ">
+                            <p class="text-center text-muted ">
+                                <span class="appName " style="font-style:italic ">wogo</span> &copy; 2018 <a href="https://www.wogo.org " target="_blank ">www.wogo.org</a>
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
