@@ -24,6 +24,18 @@ import { UsersComponent } from './admin/user/users/users.component';
 import { UserDetailsComponent } from './admin/user/user-details/user-details.component';
 import { MissionsComponent } from './mission/missions/missions.component';
 import { MissionDetailsComponent } from './mission/mission-details/mission-details.component';
+import { ProductSetComponent } from './product/product-set/product-set.component';
+import { BoxComponent } from './dispatch/box/box.component';
+import { BoxDetailsComponent } from './dispatch/box-details/box-details.component';
+import { PalletComponent } from './dispatch/pallet/pallet.component';
+import { PalletDetailsComponent } from './dispatch/pallet-details/pallet-details.component';
+import { OrderComponent } from './inventory/order/order.component';
+import { OrderDetailsComponent } from './inventory/order-details/order-details.component';
+import { SetDetailsComponent } from './product/set-details/set-details.component';
+import { CaseComponent } from './product/case/case.component';
+import { CaseDetailsComponent } from './product/case-details/case-details.component';
+import { ProductCategoryComponent } from './product/product-category/product-category.component';
+import { CategoryComponent } from './product/category/category.component';
 
 
 
@@ -31,14 +43,42 @@ import { MissionDetailsComponent } from './mission/mission-details/mission-detai
   imports: [
     RouterModule.forRoot([
       { path: '', component: HomeComponent, canActivate: [AuthGuardGuard], data: { title: 'Home' } },
+      {
+        path: 'products', canActivate: [AuthGuardGuard],
+        children: [
+          { path: 'list', component: ProductsComponent, canActivate: [AuthGuardGuard], data: { title: 'Products' } },
+          { path: 'add', component: ProductDetailsComponent, canActivate: [AuthGuardGuard], data: { title: 'Product' } },
+          { path: 'details/:id', component: ProductDetailsComponent, canActivate: [AuthGuardGuard], data: { title: 'Product' } },
 
-      { path: 'products', component: ProductsComponent, canActivate: [AuthGuardGuard], data: { title: 'Products' } },
-      { path: 'products/add', component: ProductDetailsComponent, canActivate: [AuthGuardGuard], data: { title: 'Product' } },
-      { path: 'products/details/:id', component: ProductDetailsComponent, canActivate: [AuthGuardGuard], data: { title: 'Product' } },
+          { path: 'sets', component: ProductSetComponent, canActivate: [AuthGuardGuard], data: { title: 'Product Set' } },
+          { path: 'sets/add', component: SetDetailsComponent, canActivate: [AuthGuardGuard], data: { title: 'Product Set' } },
+          { path: 'sets/details/:id', component: SetDetailsComponent, canActivate: [AuthGuardGuard], data: { title: 'Product Set' } },
 
-      { path: 'inventory', component: InventoryComponent, canActivate: [AuthGuardGuard], data: { title: 'Inventory' } },
-      { path: 'inventory/add', component: InventoryProcureComponent, canActivate: [AuthGuardGuard], data: { title: 'Inventory' } },
-      { path: 'inventory/details/:id', component: InventoryDetailsComponent, canActivate: [AuthGuardGuard], data: { title: 'Inventory' } },
+          { path: 'cases', component: CaseComponent, canActivate: [AuthGuardGuard], data: { title: 'Cases' } },
+          { path: 'cases/add', component: CaseDetailsComponent, canActivate: [AuthGuardGuard], data: { title: 'Case' } },
+          { path: 'cases/details/:id', component: CaseDetailsComponent, canActivate: [AuthGuardGuard], data: { title: 'Case' } },
+
+          { path: 'category', component: ProductCategoryComponent, canActivate: [AuthGuardGuard], data: { title: 'Category' } },
+          { path: 'category/add', component: CategoryComponent, canActivate: [AuthGuardGuard], data: { title: 'Category' } },
+          { path: 'category/details/:id', component: CategoryComponent, canActivate: [AuthGuardGuard], data: { title: 'Category' } }
+        ]
+      },
+
+
+      { path: 'requisition', component: InventoryComponent, canActivate: [AuthGuardGuard], data: { title: 'Requisition' } },
+      { path: 'requisition/add', component: InventoryProcureComponent, canActivate: [AuthGuardGuard], data: { title: 'Requisition' } },
+      {
+        path: 'requisition/details/:id', component: InventoryDetailsComponent,
+        canActivate: [AuthGuardGuard], data: { title: 'Requisition' }
+      },
+
+
+      { path: 'orders', component: OrderComponent, canActivate: [AuthGuardGuard], data: { title: 'Inventory' } },
+      { path: 'orders/add', component: OrderDetailsComponent, canActivate: [AuthGuardGuard], data: { title: 'Inventory' } },
+      {
+        path: 'orders/details/:id', component: OrderDetailsComponent,
+        canActivate: [AuthGuardGuard], data: { title: 'Inventory' }
+      },
 
       {
         path: 'admin', canActivateChild: [AuthGuardGuard],
@@ -58,6 +98,19 @@ import { MissionDetailsComponent } from './mission/mission-details/mission-detai
           { path: 'mission', component: MissionsComponent, canActivate: [AuthGuardGuard], data: { title: 'Mission' } },
           { path: 'mission/add', component: MissionDetailsComponent, canActivate: [AuthGuardGuard], data: { title: 'Mission' } },
           { path: 'mission/details/:id', component: MissionDetailsComponent, canActivate: [AuthGuardGuard], data: { title: 'Mission' } }
+        ]
+      },
+
+      {
+        path: 'dispatch', canActivateChild: [AuthGuardGuard],
+        children: [
+          { path: 'box', component: BoxComponent, canActivate: [AuthGuardGuard], data: { title: 'Box' } },
+          { path: 'box/add', component: BoxDetailsComponent, canActivate: [AuthGuardGuard], data: { title: 'Box' } },
+          { path: 'box/details/:id', component: BoxDetailsComponent, canActivate: [AuthGuardGuard], data: { title: 'Box' } },
+
+          { path: 'pallets', component: PalletComponent, canActivate: [AuthGuardGuard], data: { title: 'Pallet' } },
+          { path: 'pallets/add', component: PalletDetailsComponent, canActivate: [AuthGuardGuard], data: { title: 'Pallet' } },
+          { path: 'pallets/details/:id', component: PalletDetailsComponent, canActivate: [AuthGuardGuard], data: { title: 'Pallet' } }
         ]
       },
       { path: 'login', component: LoginComponent, data: { title: 'Login' } },

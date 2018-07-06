@@ -59,9 +59,9 @@ export class ProductDetailsComponent implements OnInit {
             this.orgProd = Object.assign({}, this.prod);
             this.http
               .get(Constants.apiUrl + '/productset')
-              .subscribe((data: any) => {
-                console.log("productset", data)
-                this.productset = data.filter(a => a.productId == this.prod.id);
+              .subscribe((data1: any) => {
+                console.log('productset', data1)
+                this.productset = data1.filter(a => a.productId == this.prod.id);
               });
           });
       } else {
@@ -77,8 +77,8 @@ export class ProductDetailsComponent implements OnInit {
       this.http.put(Constants.apiUrl + '/products/' + this.prodId, JSON.stringify(this.prod), { headers: headers })
         .subscribe((data: Product) => {
           console.log('product', data);
-          this.router.navigate(['/products']);
-          //this.prod = data;
+          this.router.navigate(['/products/list']);
+          // this.prod = data;
         });
     } else {
       console.log(this.prod);
@@ -91,7 +91,7 @@ export class ProductDetailsComponent implements OnInit {
           this.http.post(Constants.apiUrl + '/products', JSON.stringify(this.prod), { headers: headers })
             .subscribe((data1: Product) => {
               console.log('product saved', data);
-              this.router.navigate(['/products']);
+              this.router.navigate(['/products/list']);
             });
         });
     }
@@ -106,8 +106,7 @@ export class ProductDetailsComponent implements OnInit {
     this.http.delete(Constants.apiUrl + '/products/' + this.prodId)
       .subscribe((data: Product) => {
         console.log('product', data);
-        this.router.navigate(['/products']);
-        //this.prod = data;
+        this.router.navigate(['/products/list']);
       });
 
   }
@@ -147,12 +146,11 @@ export class ProductDetailsComponent implements OnInit {
 
   onProductImageFileChange(event) {
     if (event.target.files.length > 0) {
-      let file = event.target.files[0];
+      const file = event.target.files[0];
       console.log(file);
-      // this.prod.Productimage = file;
 
       if (event.target.files && event.target.files[0]) {
-        var reader = new FileReader();
+        const reader = new FileReader();
 
         reader.readAsDataURL(event.target.files[0]); // read file as data url
 
@@ -166,12 +164,12 @@ export class ProductDetailsComponent implements OnInit {
 
   onProductBarcodeFileChange(event) {
     if (event.target.files.length > 0) {
-      let file = event.target.files[0];
+      const file = event.target.files[0];
       console.log(file);
       // this.prod.Productimage = file;
 
       if (event.target.files && event.target.files[0]) {
-        var reader = new FileReader();
+        const reader = new FileReader();
 
         reader.readAsDataURL(event.target.files[0]); // read file as data url
 

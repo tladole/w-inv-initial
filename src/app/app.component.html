@@ -11,8 +11,11 @@
                     </button>
             <div class="navbar-collapse collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto" *ngIf="authService.isUserLoggedIn ">
-                    <li routerLinkActive="active" class="nav-item" [routerLinkActiveOptions]="{ exact: true }"><a class="nav-link" routerLink=""><span class="glyphicon glyphicon-home"></span></a></li>
-                    <li class="dropdown" *ngIf="authService.isUserAdmin " title="Admin">
+                    <li routerLinkActive="active" class="nav-item" [routerLinkActiveOptions]="{ exact: true }">
+                        <a class="nav-link" routerLink="">
+                            <span class="glyphicon glyphicon-home"></span></a>
+                    </li>
+                    <li class="dropdown" routerLinkActive="active" *ngIf="authService.isUserAdmin " title="Admin">
                         <a class="nav-link" data-toggle="dropdown" href="#">Admin <span class="caret"></span></a>
                         <ul class="dropdown-menu bg-dark">
                             <li routerLinkActive="active" class="dropdown-item"><a class="nav-link" routerLink="/admin/mission">Mission</a></li>
@@ -21,11 +24,26 @@
                             <li routerLinkActive="active" class="dropdown-item"><a class="nav-link" routerLink="/admin/users">Users</a></li>
                         </ul>
                     </li>
-                    <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="/products">Products</a></li>
-                    <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="/inventory">Procurement</a></li>
+                    <li class="dropdown" routerLinkActive="active" title="Products">
+                        <a class="nav-link" data-toggle="dropdown" href="#">Products <span class="caret"></span></a>
+                        <ul class="dropdown-menu bg-dark">
+                            <li routerLinkActive="active" class="dropdown-item"><a class="nav-link" routerLink="/products/list">Products</a></li>
+                            <li routerLinkActive="active" class="dropdown-item"><a class="nav-link" routerLink="/products/sets">Set</a></li>
+                            <li routerLinkActive="active" class="dropdown-item"><a class="nav-link" routerLink="/products/cases">Case</a></li>
+                            <li routerLinkActive="active" class="dropdown-item"><a class="nav-link" routerLink="/products/category">Category</a></li>
+                        </ul>
+                    </li>
+                    <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="/requisition">Requisition</a></li>
                     <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="/orders">Inventory</a></li>
+                    <li class="dropdown" routerLinkActive="active" title="Dispatch">
+                        <a class="nav-link" data-toggle="dropdown" href="#">Dispatch <span class="caret"></span></a>
+                        <ul class="dropdown-menu bg-dark">
+                            <li routerLinkActive="active" class="dropdown-item"><a class="nav-link" routerLink="/dispatch/box">Boxes</a></li>
+                            <li routerLinkActive="active" class="dropdown-item"><a class="nav-link" routerLink="/dispatch/pallets">Pallets</a></li>
+                        </ul>
+                    </li>
                     <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="/reports">Reports</a></li>
-                    <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="/about">About</a></li>
+                    <!-- <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="/about">About</a></li> -->
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
                     <ul class="app-component nav navbar-nav nav-pills navBarPadding navbar-right" *ngIf="authService.isUserLoggedIn ">
@@ -40,17 +58,12 @@
         <div style="margin-top: 15px">
             <router-outlet></router-outlet>
         </div>
-        <div id="footer">
-            <div class="app-component navbar-inner footer ">
-                <div class="container-fluid navbar-inverse">
-                    <footer>
-                        <div class="app-component vcenter_text center-block ">
-                            <p class="text-center text-muted ">
-                                <span class="appName " style="font-style:italic ">wogo</span> &copy; 2018 <a href="https://www.wogo.org " target="_blank ">www.wogo.org</a>
-                            </p>
-                        </div>
-                    </footer>
+        <footer class="bg-dark text-white mt-4">
+            <div class="container-fluid py-3">
+                <div class="row">
+                    <div class="col-md-9"></div>
+                    <div class="col-md-3 text-right small align-self-end">©2018 WOGO</div>
                 </div>
             </div>
-        </div>
+        </footer>
     </div>

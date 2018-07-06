@@ -35,7 +35,7 @@ export class UserDetailsComponent implements OnInit {
         console.log(data)
         this.roles = data;
       });
-    //this.user = new User();
+    // this.user = new User();
     this.activeRoute.params.subscribe((params: Params) => {
       console.log(params);
       const id = params['id'];
@@ -46,7 +46,7 @@ export class UserDetailsComponent implements OnInit {
           if (id) {
             this.http.get(Constants.apiUrl + '/users/' + id)
               .subscribe((data: any) => {
-                let data1 = u.filter(a => a.id == data.CreatedBy)[0];
+                const data1 = u.filter(a => a.id === data.CreatedBy)[0];
                 console.log('product', data);
                 this.user = data;
                 this.UserId = id;
@@ -69,14 +69,14 @@ export class UserDetailsComponent implements OnInit {
   saveUser() {
     const headers = new HttpHeaders()
       .append('Content-Type', 'application/json');
-      let r: any = Object.assign({}, this.user);
-      r.CreatedBy = this.user.CreatedBy.id;
+    const r: any = Object.assign({}, this.user);
+    r.CreatedBy = this.user.CreatedBy.id;
     if (this.UserId) {
       this.http.put(Constants.apiUrl + '/Users/' + this.UserId, JSON.stringify(r), { headers: headers })
         .subscribe((data: User) => {
           console.log('product', data);
           this.router.navigate(['/admin/users']);
-          //this.prod = data;
+          // this.prod = data;
         });
     } else {
       console.log(r);
@@ -94,9 +94,10 @@ export class UserDetailsComponent implements OnInit {
           this.http.post(Constants.apiUrl + '/Users', JSON.stringify(r), { headers: headers })
             .subscribe((data1: User) => {
               console.log('product saved', data1);
-              this.http.post(Constants.apiUrl + '/password', JSON.stringify({ id: r.id, Password: this.userPassword }), { headers: headers })
-                .subscribe((data1: User) => {
-                  console.log('product saved', data1);
+              this.http.post(Constants.apiUrl + '/password',
+                JSON.stringify({ id: r.id, Password: this.userPassword }), { headers: headers })
+                .subscribe((data2: User) => {
+                  console.log('product saved', data2);
                   this.router.navigate(['/admin/users']);
                 });
             });
@@ -118,7 +119,7 @@ export class UserDetailsComponent implements OnInit {
             console.log('product saved', data1);
             this.router.navigate(['/admin/users']);
           });
-        //this.prod = data;
+        // this.prod = data;
       });
 
   }

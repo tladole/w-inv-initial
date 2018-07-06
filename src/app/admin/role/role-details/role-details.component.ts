@@ -54,17 +54,16 @@ export class RoleDetailsComponent implements OnInit {
     const headers = new HttpHeaders()
       .append('Content-Type', 'application/json');
     if (this.roleId) {
-      let r: any = Object.assign({}, this.role);
+      const r: any = Object.assign({}, this.role);
       r.CreatedBy = this.role.CreatedBy.id;
       this.http.put(Constants.apiUrl + '/roles/' + this.roleId, JSON.stringify(r), { headers: headers })
         .subscribe((data: UserRole) => {
           console.log('product', data);
           this.router.navigate(['/admin/roles']);
-          //this.prod = data;
         });
     } else {
       console.log(this.role);
-      let r: any = Object.assign({}, this.role);
+      const r: any = Object.assign({}, this.role);
       r.CreatedBy = this.role.CreatedBy.id;
       this.http
         .get(Constants.apiUrl + '/roles')
@@ -95,8 +94,6 @@ export class RoleDetailsComponent implements OnInit {
     this.http.delete(Constants.apiUrl + '/roles/' + this.roleId)
       .subscribe((data: UserRole) => {
         console.log('product', data);
-        this.router.navigate(['/admin/roles']);
-        //this.prod = data;
       });
 
   }

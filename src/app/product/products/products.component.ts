@@ -26,7 +26,7 @@ export class ProductsComponent implements OnInit {
       headerName: 'Category', field: 'CategoryId', editable: true, width: 150,
       cellEditorFramework: AgDropdownGenEditorComponent,
       cellEditorParams: params => {
-        return { values: this.category }; //.map(u => u.Name)
+        return { values: this.category }; // .map(u => u.Name)
       },
       valueFormatter: data => {
         const d = this.category.filter(a => a.id == data.value)[0];
@@ -44,7 +44,7 @@ export class ProductsComponent implements OnInit {
       headerName: 'Unit Of Packaging', field: 'UnitOfPackagingId', editable: true,
       cellEditorFramework: AgDropdownGenEditorComponent,
       cellEditorParams: params => {
-        return { values: this.unitofpacking }; //.map(u => u.Name)
+        return { values: this.unitofpacking }; // .map(u => u.Name)
       },
       valueParser: params => {
         return this.unitofpacking.filter(a => a.Name == params.newValue)[0].id;
@@ -68,7 +68,7 @@ export class ProductsComponent implements OnInit {
       headerName: 'Country Of Origin', editable: true, field: 'CountryOfOriginId',
       cellEditorFramework: AgDropdownGenEditorComponent,
       cellEditorParams: params => {
-        return { values: this.country }; //.map(u => u.Name)
+        return { values: this.country }; // .map(u => u.Name)
       },
       valueParser: params => {
         return this.country.filter(a => a.Name == params.newValue)[0].id;
@@ -99,7 +99,7 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.rowSelection = "single";
+    this.rowSelection = 'single';
     this.http
       .get(Constants.apiUrl + '/unitofpacking')
       .subscribe((data: any) => {
@@ -120,12 +120,12 @@ export class ProductsComponent implements OnInit {
       });
   }
   onSelectionChanged(event: any) {
-    var selectedRows = this.gridApi.getSelectedRows();
-    var selectedRowsString = "";
+    const selectedRows = this.gridApi.getSelectedRows();
+    let selectedRowsString = '';
     console.log(selectedRows);
     selectedRows.forEach(function (selectedRow, index) {
       if (index !== 0) {
-        selectedRowsString += ", ";
+        selectedRowsString += ', ';
       }
       selectedRowsString += selectedRow.model;
     });
@@ -133,7 +133,7 @@ export class ProductsComponent implements OnInit {
   }
 
   updateOther() {
-    var selectedRows = this.gridApi.getSelectedRows();
+    const selectedRows = this.gridApi.getSelectedRows();
     console.log(selectedRows);
     this.router.navigate(['products/details/', selectedRows[0].id])
   }
@@ -162,12 +162,12 @@ export class ProductsComponent implements OnInit {
       .get(Constants.apiUrl + '/products')
       .subscribe((data: Product[]) => {
         this.rowDataOrg = JSON.parse(JSON.stringify(data));
-        let savingRec = new Array();
+        const savingRec = new Array();
         this.rowData.forEach(rec => {
           if (this.rowDataOrg.filter(a => a.id == rec.id).length > 0) {
             const org1 = this.rowDataOrg.filter(a => a.id == rec.id)[0];
             Object.keys(rec).forEach(key => {
-              if (org1[key] != rec[key]) {
+              if (org1[key] !== rec[key]) {
                 if (savingRec.filter(a => a.id == rec.id).length == 0) {
                   savingRec.push(rec);
                   return;
@@ -176,17 +176,21 @@ export class ProductsComponent implements OnInit {
             });
           }
         });
-        console.log("bulk save", savingRec)
+        console.log('bulk save', savingRec)
         const headers = new HttpHeaders()
           .append('Content-Type', 'application/json');
-        savingRec.forEach(element => {
-          this.http.put(Constants.apiUrl + '/products/' + element.id, JSON.stringify(element), { headers: headers })
-            .subscribe((data: Product) => {
-              console.log('product', data);
-              this.alertService.showMessage('Save', `Product '` + data.ProductName + `' saved successfully`, MessageSeverity.success);
-              //this.prod = data;
-            });
-        });
+        if (savingRec && savingRec.length > 0) {
+          savingRec.forEach(element => {
+            this.http.put(Constants.apiUrl + '/products/' + element.id, JSON.stringify(element), { headers: headers })
+              .subscribe((data1: Product) => {
+                console.log('product', data1);
+                this.alertService.showMessage('Save', `Product '` + data1.ProductName + `' saved successfully`, MessageSeverity.success);
+                // this.prod = data;
+              });
+          });
+        } else {
+          this.alertService.showMessage('Save', `Nothing to save!`, MessageSeverity.info);
+        }
       });
   }
 }

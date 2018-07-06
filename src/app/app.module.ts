@@ -47,6 +47,18 @@ import { AgDropdownGenEditorComponent } from './shared/component/ag-dropdown-gen
 import { AgDateGenEditorComponent } from './shared/component/ag-date-gen-editor/ag-date-gen-editor.component';
 import { MissionsComponent } from './mission/missions/missions.component';
 import { MissionDetailsComponent } from './mission/mission-details/mission-details.component';
+import { BoxComponent } from './dispatch/box/box.component';
+import { BoxDetailsComponent } from './dispatch/box-details/box-details.component';
+import { PalletComponent } from './dispatch/pallet/pallet.component';
+import { PalletDetailsComponent } from './dispatch/pallet-details/pallet-details.component';
+import { CaseComponent } from './product/case/case.component';
+import { CaseDetailsComponent } from './product/case-details/case-details.component';
+import { OrderComponent } from './inventory/order/order.component';
+import { OrderDetailsComponent } from './inventory/order-details/order-details.component';
+import { SetModalComponent } from './product/set-modal/set-modal.component';
+import { SetDetailsComponent } from './product/set-details/set-details.component';
+import { CategoryComponent } from './product/category/category.component';
+import { CategoryModalComponent } from './product/category-modal/category-modal.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +94,19 @@ import { MissionDetailsComponent } from './mission/mission-details/mission-detai
     AgDropdownGenEditorComponent,
     AgDateGenEditorComponent,
     MissionsComponent,
-    MissionDetailsComponent
+    MissionDetailsComponent,
+    BoxComponent,
+    BoxDetailsComponent,
+    PalletComponent,
+    PalletDetailsComponent,
+    CaseComponent,
+    CaseDetailsComponent,
+    OrderComponent,
+    OrderDetailsComponent,
+    SetModalComponent,
+    SetDetailsComponent,
+    CategoryComponent,
+    CategoryModalComponent
   ],
   imports: [
     BrowserModule,

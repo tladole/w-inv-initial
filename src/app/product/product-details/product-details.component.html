@@ -4,7 +4,7 @@
             <h4>{{activeRoute.routeConfig.path.endsWith('/add') ? ('Add Product: ' + (prod.ProductName ? prod.ProductName : '')) : 'Product: ' + prod.ProductName}}</h4>
         </div>
         <div class="pull-right col-md-1">
-            <input type="button" title="Back" class="form-control btn-primary" value="Back" routerLink="/products">
+            <input type="button" title="Back" class="form-control btn-primary" value="Back" routerLink="/products/list">
         </div>
     </div>
     <form #ngaForm='ngForm' class="needs-validation" (ngSubmit)="saveProduct()" novalidate>
