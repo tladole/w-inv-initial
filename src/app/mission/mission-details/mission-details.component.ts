@@ -12,6 +12,7 @@ import { User } from '../../shared/model/admin/user.model';
 export class MissionDetailsComponent implements OnInit {
   role: MissionView;
   orgProd: MissionView;
+  mission: Mission;
   roleId: number;
 
   constructor(private http: HttpClient, private router: Router, private activeRoute: ActivatedRoute) {
@@ -56,7 +57,11 @@ export class MissionDetailsComponent implements OnInit {
     const headers = new HttpHeaders()
       .append('Content-Type', 'application/json');
     if (this.roleId) {
-      const r: any = Object.assign({}, this.role);
+      const r = new Mission(); // = Object.assign({}, this.role);
+      r.id = this.role.id;
+      r.active = this.role.active;
+      r.location = this.role.location;
+      r.modifiedDate = new Date(Date.now());
       r.modifiedBy = this.role.modifiedBy.id;
       this.http.put(Constants.apiUrl + '/mission/' + this.roleId, JSON.stringify(r), { headers: headers })
         .subscribe((data: MissionView) => {
@@ -66,7 +71,11 @@ export class MissionDetailsComponent implements OnInit {
         });
     } else {
       console.log(this.role);
-      const r: any = Object.assign({}, this.role);
+      const r = new Mission(); // = Object.assign({}, this.role);
+      r.name = this.role.name;
+      r.active = this.role.active;
+      r.location = this.role.location;
+      r.modifiedDate = new Date(Date.now());
       r.modifiedBy = this.role.modifiedBy.id;
       this.http
         .get(Constants.apiUrl + '/mission')
@@ -77,7 +86,8 @@ export class MissionDetailsComponent implements OnInit {
           } else {
             r.id = 1;
           }
-          r.CreatedDate = new Date(Date.now());
+          r.modifiedDate = new Date(Date.now());
+          r.modifiedBy = this.role.modifiedBy.id;
           console.log(r);
           this.http.post(Constants.apiUrl + '/mission', JSON.stringify(r), { headers: headers })
             .subscribe((data1: Mission) => {

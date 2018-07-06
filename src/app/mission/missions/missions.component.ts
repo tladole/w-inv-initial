@@ -24,14 +24,14 @@ export class MissionsComponent implements OnInit {
       headerName: 'Modified Date', field: 'modifiedDate',
       valueFormatter: data => {
         const d = new Date(data.value);
-        console.log('day', data.value, d, d.getDate(), d.getDate().toString()[1])
+        console.log('day', data.value, d, d.getDate(), d.getDate().toString()[1]);
         const day = d.getDate().toString()[1] ? d.getDate().toString() : '0' + d.getDate().toString();
         const month = (d.getMonth() + 1).toString()[1] ? (d.getMonth() + 1).toString() : '0' + (d.getMonth() + 1).toString();
         return (new Date(data.value)).getFullYear() + '-' + month + '-' + day;
       }
     },
     {
-      headerName: "Actions",
+      headerName: 'Actions',
       suppressMenu: true,
       suppressSorting: true,
       template:
@@ -54,7 +54,7 @@ export class MissionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.rowSelection = "single";
+    this.rowSelection = 'single';
     this.http.get(Constants.apiUrl + '/users')
       .subscribe((data1: any) => {
         console.log('users', data1);
@@ -76,29 +76,31 @@ export class MissionsComponent implements OnInit {
 
   public onRowClicked(e) {
     if (e.event.target !== undefined) {
-      let data = e.data;
-      let actionType = e.event.target.getAttribute("data-action-type");
+      const data = e.data;
+      const actionType = e.event.target.getAttribute('data-action-type');
 
       switch (actionType) {
-        case "update":
+        case 'update':
           return this.onActionViewClick(data);
       }
     }
   }
 
   public onActionViewClick(data2: any) {
-    console.log("View action clicked", data2);
+    console.log('View action clicked', data2);
     const headers = new HttpHeaders()
       .append('Content-Type', 'application/json');
     data2.active = true;
+    const recDetail = new Mission(data2.id, data2.name, data2.location, data2.modifiedBy.id, data2.modifiedDate);
+    recDetail.active = true;
 
-    this.http.put(Constants.apiUrl + '/mission/' + data2.id, JSON.stringify(data2), { headers: headers })
+    this.http.put(Constants.apiUrl + '/mission/' + recDetail.id, JSON.stringify(recDetail), { headers: headers })
       .subscribe((data: Mission) => {
         console.log('product', data);
         this.alertService.showMessage('Save', `Mission '` + data.name + `' updated successfully.`, MessageSeverity.success);
         Constants.missionName = data;
         this.authService.emit(true);
-        //this.prod = data;
+        // this.prod = data;
         this.http
           .get(Constants.apiUrl + '/mission')
           .subscribe((data1: Mission[]) => {
@@ -109,7 +111,7 @@ export class MissionsComponent implements OnInit {
                   .subscribe((data3: Mission) => {
                     console.log('product', data3);
                     this.alertService.showMessage('Save', `Mission '` + data3.name + `' updated successfully.`, MessageSeverity.success);
-                    //this.prod = data;
+                    // this.prod = data;
                   });
               }
             });
@@ -122,15 +124,15 @@ export class MissionsComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.rowData = new Array();
-    let rows = new Array();
+    const rows = new Array();
 
     this.http
       .get(Constants.apiUrl + '/mission')
       .subscribe((data: Mission[]) => {
         data.forEach(element => {
-          let data1 = this.users.filter(a => a.id == element.modifiedBy)[0];
+          const data1 = this.users.filter(a => a.id == element.modifiedBy)[0];
           console.log('user', data1);
-          let role = new MissionView();
+          const role = new MissionView();
           role.id = element.id;
           role.name = element.name;
           role.location = element.location;
@@ -151,9 +153,9 @@ export class MissionsComponent implements OnInit {
     this.http
       .get(Constants.apiUrl + '/mission')
       .subscribe((data: Mission[]) => {
-        let rowDataOrg = JSON.parse(JSON.stringify(data));
-        let savingRec = new Array();
-        console.log('start save all', this.rowData, data)
+        const rowDataOrg = JSON.parse(JSON.stringify(data));
+        const savingRec = new Array();
+        console.log('start save all', this.rowData, data);
         this.rowData.forEach(rec => {
           if (rowDataOrg.filter(a => a.id == rec.id).length > 0) {
             const org1 = rowDataOrg.filter(a => a.id == rec.id)[0];
@@ -168,15 +170,15 @@ export class MissionsComponent implements OnInit {
             });
           }
         });
-        console.log("bulk save", savingRec)
+        console.log('bulk save', savingRec);
         const headers = new HttpHeaders()
           .append('Content-Type', 'application/json');
         savingRec.forEach(element => {
           this.http.put(Constants.apiUrl + '/mission/' + element.id, JSON.stringify(element), { headers: headers })
-            .subscribe((data: Mission) => {
-              console.log('product', data);
-              this.alertService.showMessage('Save', `Mission '` + data.name + `' updated successfully.`, MessageSeverity.success);
-              //this.prod = data;
+            .subscribe((data1: Mission) => {
+              console.log('product', data1);
+              this.alertService.showMessage('Save', `Mission '` + data1.name + `' updated successfully.`, MessageSeverity.success);
+              // this.prod = data;
             });
         });
       });
