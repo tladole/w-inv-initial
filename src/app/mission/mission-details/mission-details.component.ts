@@ -56,17 +56,17 @@ export class MissionDetailsComponent implements OnInit {
     const headers = new HttpHeaders()
       .append('Content-Type', 'application/json');
     if (this.roleId) {
-      let r: any = Object.assign({}, this.role);
+      const r: any = Object.assign({}, this.role);
       r.modifiedBy = this.role.modifiedBy.id;
       this.http.put(Constants.apiUrl + '/mission/' + this.roleId, JSON.stringify(r), { headers: headers })
         .subscribe((data: MissionView) => {
           console.log('product', data);
           this.router.navigate(['/admin/mission']);
-          //this.prod = data;
+          // this.prod = data;
         });
     } else {
       console.log(this.role);
-      let r: any = Object.assign({}, this.role);
+      const r: any = Object.assign({}, this.role);
       r.modifiedBy = this.role.modifiedBy.id;
       this.http
         .get(Constants.apiUrl + '/mission')
@@ -77,7 +77,7 @@ export class MissionDetailsComponent implements OnInit {
           } else {
             r.id = 1;
           }
-          r.CreatedDate = new Date(Date.now())
+          r.CreatedDate = new Date(Date.now());
           console.log(r);
           this.http.post(Constants.apiUrl + '/mission', JSON.stringify(r), { headers: headers })
             .subscribe((data1: Mission) => {
@@ -98,7 +98,7 @@ export class MissionDetailsComponent implements OnInit {
       .subscribe((data: Mission) => {
         console.log('product', data);
         this.router.navigate(['/admin/mission']);
-        //this.prod = data;
+        // this.prod = data;
       });
 
   }

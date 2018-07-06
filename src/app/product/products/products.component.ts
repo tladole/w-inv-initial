@@ -19,7 +19,7 @@ import { AgDateGenEditorComponent } from '../../shared/component/ag-date-gen-edi
 export class ProductsComponent implements OnInit {
   gridOptions: GridOptions = {
     context: { curr: this }
-  }
+  };
   columnDefs: ColDef[] = [
     { headerName: 'Product Name', field: 'ProductName', editable: true, pinned: true, width: 300 },
     {
@@ -103,19 +103,19 @@ export class ProductsComponent implements OnInit {
     this.http
       .get(Constants.apiUrl + '/unitofpacking')
       .subscribe((data: any) => {
-        console.log(data)
+        console.log(data);
         this.unitofpacking = data;
       });
     this.http
       .get(Constants.apiUrl + '/category')
       .subscribe((data: any) => {
-        console.log(data)
+        console.log(data);
         this.category = data;
       });
     this.http
       .get(Constants.apiUrl + '/country')
       .subscribe((data: any) => {
-        console.log(data)
+        console.log(data);
         this.country = data;
       });
   }
@@ -129,13 +129,13 @@ export class ProductsComponent implements OnInit {
       }
       selectedRowsString += selectedRow.model;
     });
-    this.router.navigate(['products/details/', selectedRows[0].id])
+    this.router.navigate(['products/details/', selectedRows[0].id]);
   }
 
   updateOther() {
     const selectedRows = this.gridApi.getSelectedRows();
     console.log(selectedRows);
-    this.router.navigate(['products/details/', selectedRows[0].id])
+    this.router.navigate(['products/details/', selectedRows[0].id]);
   }
 
   onGridReady(params) {
@@ -176,7 +176,7 @@ export class ProductsComponent implements OnInit {
             });
           }
         });
-        console.log('bulk save', savingRec)
+        console.log('bulk save', savingRec);
         const headers = new HttpHeaders()
           .append('Content-Type', 'application/json');
         if (savingRec && savingRec.length > 0) {

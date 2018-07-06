@@ -32,19 +32,19 @@ export class ProductDetailsComponent implements OnInit {
     this.http
       .get(Constants.apiUrl + '/unitofpacking')
       .subscribe((data: any) => {
-        console.log(data)
+        console.log(data);
         this.unitofpacking = data;
       });
     this.http
       .get(Constants.apiUrl + '/category')
       .subscribe((data: any) => {
-        console.log(data)
+        console.log(data);
         this.category = data;
       });
     this.http
       .get(Constants.apiUrl + '/country')
       .subscribe((data: any) => {
-        console.log(data)
+        console.log(data);
         this.country = data;
       });
     this.prod = new Product();
@@ -60,7 +60,7 @@ export class ProductDetailsComponent implements OnInit {
             this.http
               .get(Constants.apiUrl + '/productset')
               .subscribe((data1: any) => {
-                console.log('productset', data1)
+                console.log('productset', data1);
                 this.productset = data1.filter(a => a.productId == this.prod.id);
               });
           });
@@ -121,7 +121,7 @@ export class ProductDetailsComponent implements OnInit {
       this.http
         .get(Constants.apiUrl + '/category')
         .subscribe((data: any) => {
-          console.log(data)
+          console.log(data);
           this.category = data;
         });
     });
@@ -138,7 +138,7 @@ export class ProductDetailsComponent implements OnInit {
       this.http
         .get(Constants.apiUrl + '/category')
         .subscribe((data: any) => {
-          console.log(data)
+          console.log(data);
           this.category = data;
         });
     });
@@ -157,7 +157,7 @@ export class ProductDetailsComponent implements OnInit {
         reader.onload = (event1: any) => { // called once readAsDataURL is completed
           console.log('image loaded', event1.target.result);
           this.prod.Productimage = event1.target.result;
-        }
+        };
       }
     }
   }
@@ -176,7 +176,7 @@ export class ProductDetailsComponent implements OnInit {
         reader.onload = (event1: any) => { // called once readAsDataURL is completed
           console.log('barcode loaded', event1.target.result);
           this.prod.BarcodeImage = event1.target.result;
-        }
+        };
       }
     }
   }
