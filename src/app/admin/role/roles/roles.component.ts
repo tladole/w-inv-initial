@@ -35,7 +35,7 @@ export class RolesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.rowSelection = "single";
+    this.rowSelection = 'single';
     this.http.get(Constants.apiUrl + '/users')
       .subscribe((data1: any) => {
         console.log('users', data1);
@@ -43,12 +43,12 @@ export class RolesComponent implements OnInit {
       });
   }
   onSelectionChanged(event: any) {
-    var selectedRows = this.gridApi.getSelectedRows();
-    var selectedRowsString = "";
+    const selectedRows = this.gridApi.getSelectedRows();
+    let selectedRowsString = '';
     console.log(selectedRows);
     selectedRows.forEach(function (selectedRow, index) {
       if (index !== 0) {
-        selectedRowsString += ", ";
+        selectedRowsString += ', ';
       }
       selectedRowsString += selectedRow.model;
     });
@@ -60,15 +60,15 @@ export class RolesComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     this.rowData = new Array();
-    let rows = new Array();
+    const rows = new Array();
 
     this.http
       .get(Constants.apiUrl + '/roles')
       .subscribe((data: any) => {
         data.forEach(element => {
-          let data1 = this.users.filter(a => a.id == element.CreatedBy)[0];
+          const data1 = this.users.filter(a => a.id == element.CreatedBy)[0];
           console.log('user', data1);
-          let role = new UserRole();
+          const role = new UserRole();
           role.id = element.id;
           role.RoleName = element.RoleName;
           role.CreatedDate = element.CreatedDate;

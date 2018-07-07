@@ -1,4 +1,4 @@
-import { User } from "./admin/user.model";
+import { User } from './admin/user.model';
 
 export class Mission {
     id: number;

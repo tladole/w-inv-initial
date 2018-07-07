@@ -1,7 +1,7 @@
-import { Patient } from "./patient.model";
-import { ProductSet } from "./product-set.model";
+import { Patient } from './patient.model';
+import { ProductSet } from './product-set.model';
 
-export class PatientCaseInventory{
+export class PatientCaseInventory {
     id: number;
     patient: Patient;
     ProductSetUnits: [{ productSet: ProductSet, units: number }];

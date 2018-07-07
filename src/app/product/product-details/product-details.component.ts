@@ -8,6 +8,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { ProductCategoryComponent } from '../product-category/product-category.component';
 import { ProductSetComponent } from '../product-set/product-set.component';
+import { SetModalComponent } from 'app/product/set-modal/set-modal.component';
 
 @Component({
   selector: 'app-product-details',
@@ -113,9 +114,9 @@ export class ProductDetailsComponent implements OnInit {
 
   addSet() {
     const initialState = {
-      categoryId: this.prod.CategoryId
+      prodId: this.prod.id
     };
-    this.bsModalRef = this.modalService.show(ProductSetComponent, { initialState, class: 'modal-lg' });
+    this.bsModalRef = this.modalService.show(SetModalComponent, { initialState, class: 'modal-lg' });
     this.bsModalRef.content.closeBtnName = 'Close';
     this.modalService.onHidden.subscribe(a => {
       this.http

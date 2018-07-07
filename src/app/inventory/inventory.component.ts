@@ -12,7 +12,8 @@ import { DropdownField } from '../shared/model/dropdown-key.model';
 export class InventoryComponent implements OnInit {
   columnDefs = [
     {
-      headerName: 'Category Name', field: 'productId',
+      headerName: 'Category Name',
+      field: 'productId',
       valueFormatter: data => {
         const p = this.products.filter(a => a.id == data.value)[0];
         const d = this.category.filter(a => a.id == p.CategoryId)[0];
@@ -25,7 +26,8 @@ export class InventoryComponent implements OnInit {
       }
     },
     {
-      headerName: 'Product Name', field: 'productId',
+      headerName: 'Product Name',
+      field: 'productId',
       valueFormatter: data => {
         const d = this.products.filter(a => a.id == data.value)[0];
         return d.ProductName;
@@ -37,7 +39,10 @@ export class InventoryComponent implements OnInit {
     },
     { headerName: 'Total Packages Needed', field: 'TotalPackagesNeeded' },
     { headerName: 'Total Packages Available', field: 'TotalPackagesAvailable' },
-    { headerName: 'Total Packages Outstanding', field: 'TotalPackagesOutstanding' }
+    {
+      headerName: 'Total Packages Outstanding',
+      field: 'TotalPackagesOutstanding'
+    }
   ];
 
   private gridApi;
@@ -49,47 +54,40 @@ export class InventoryComponent implements OnInit {
   products: any;
   category: DropdownField[];
 
-  public constructor(private http: HttpClient, private router: Router) {
-  }
+  public constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
-    this.rowSelection = "single";
-    this.http
-      .get(Constants.apiUrl + '/products')
-      .subscribe((data: any) => {
-        console.log(data)
-        this.products = data;
-      });
-    this.http
-      .get(Constants.apiUrl + '/teams')
-      .subscribe((data: any) => {
-        console.log(data)
-        this.teams = data;
-      });
-    this.http
-      .get(Constants.apiUrl + '/warehouse')
-      .subscribe((data: any) => {
-        console.log(data)
-        this.warehouse = data;
-      });
+    this.rowSelection = 'single';
+    this.http.get(Constants.apiUrl + '/products').subscribe((data: any) => {
+      console.log(data);
+      this.products = data;
+    });
+    this.http.get(Constants.apiUrl + '/teams').subscribe((data: any) => {
+      console.log(data);
+      this.teams = data;
+    });
+    this.http.get(Constants.apiUrl + '/warehouse').subscribe((data: any) => {
+      console.log(data);
+      this.warehouse = data;
+    });
     this.http
       .get(Constants.apiUrl + '/category')
       .subscribe((data: DropdownField[]) => {
-        console.log('in category', data)
+        console.log('in category', data);
         this.category = data;
       });
   }
   onSelectionChanged(event: any) {
-    var selectedRows = this.gridApi.getSelectedRows();
-    var selectedRowsString = "";
+    const selectedRows = this.gridApi.getSelectedRows();
+    let selectedRowsString = '';
     console.log(selectedRows);
-    selectedRows.forEach(function (selectedRow, index) {
+    selectedRows.forEach(function(selectedRow, index) {
       if (index !== 0) {
-        selectedRowsString += ", ";
+        selectedRowsString += ', ';
       }
       selectedRowsString += selectedRow.model;
     });
-    this.router.navigate(['inventory/details/', selectedRows[0].id])
+    this.router.navigate(['inventory/details/', selectedRows[0].id]);
   }
 
   onGridReady(params) {
@@ -97,35 +95,46 @@ export class InventoryComponent implements OnInit {
     this.gridColumnApi = params.columnApi;
     this.rowData = new Array();
 
-    this.http
-      .get(Constants.apiUrl + '/inventory')
-      .subscribe((data: any) => {
-        let filterData = data.filter(a => a.missionId == Constants.missionName.id);
-        let grouped = filterData.reduce(function (res, obj) {
-          if (!(obj.productId in res))
-            res.__array.push(res[obj.productId] = obj);
-          else {
-            res[obj.productId].TotalPackagesAvailable = parseInt(res[obj.productId].TotalPackagesAvailable) + parseInt(obj.TotalPackagesAvailable);
-            res[obj.productId].TotalPackagesNeeded = parseInt(res[obj.productId].TotalPackagesNeeded) + parseInt(obj.TotalPackagesNeeded);
-            res[obj.productId].TotalPackagesOutstanding = parseInt(res[obj.productId].TotalPackagesOutstanding) + parseInt(obj.TotalPackagesOutstanding);
-          }
-          return res;
-        }, { __array: [] }).__array
-          .sort(function (a, b) { return b.TotalPackagesOutstanding - a.TotalPackagesOutstanding; });
-        console.log('grouped', grouped)
-        this.rowData = grouped;
-      });
+    this.http.get(Constants.apiUrl + '/inventory').subscribe((data: any) => {
+      const filterData = data.filter(
+        a => a.missionId == Constants.missionName.id
+      );
+      const grouped = filterData
+        .reduce(
+          function(res, obj) {
+            if (!(obj.productId in res)) {
+              res.__array.push((res[obj.productId] = obj));
+            } else {
+              res[obj.productId].TotalPackagesAvailable =
+                parseInt(res[obj.productId].TotalPackagesAvailable, 10) +
+                parseInt(obj.TotalPackagesAvailable, 10);
+              res[obj.productId].TotalPackagesNeeded =
+                parseInt(res[obj.productId].TotalPackagesNeeded, 10) +
+                parseInt(obj.TotalPackagesNeeded, 10);
+              res[obj.productId].TotalPackagesOutstanding =
+                parseInt(res[obj.productId].TotalPackagesOutstanding, 10) +
+                parseInt(obj.TotalPackagesOutstanding, 10);
+            }
+            return res;
+          },
+          { __array: [] }
+        )
+        .__array.sort(function(a, b) {
+          return b.TotalPackagesOutstanding - a.TotalPackagesOutstanding;
+        });
+      console.log('grouped', grouped);
+      this.rowData = grouped;
+    });
   }
 
   onQuickFilterChanged(event) {
     console.log(event);
     this.gridApi.setQuickFilter(event.data);
   }
-
 }
 
-var groupBy = function (xs, key) {
-  return xs.reduce(function (rv, x) {
+const groupBy = function(xs, key) {
+  return xs.reduce(function(rv, x) {
     (rv[x[key]] = rv[x[key]] || []).push(x);
     return rv;
   }, {});

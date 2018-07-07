@@ -1,4 +1,4 @@
-import { Mission } from "./model/mission.model";
+import { Mission } from './model/mission.model';
 
 export class Constants {
     public static apiUrl = 'https://w-demo-api.herokuapp.com';
