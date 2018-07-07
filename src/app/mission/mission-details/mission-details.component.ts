@@ -10,6 +10,7 @@ import { User } from '../../shared/model/admin/user.model';
   templateUrl: './mission-details.component.html'
 })
 export class MissionDetailsComponent implements OnInit {
+  users: User[];
   role: MissionView;
   orgProd: MissionView;
   mission: Mission;
@@ -23,6 +24,11 @@ export class MissionDetailsComponent implements OnInit {
     this.activeRoute.params.subscribe((params: Params) => {
       console.log(params);
       this.roleId = params['id'];
+      this.http
+        .get(Constants.apiUrl + '/users')
+        .subscribe((data: User[]) => {
+          this.users = data;
+        });
       if (this.roleId) {
         this.http.get(Constants.apiUrl + '/mission/' + this.roleId)
           .subscribe((data: any) => {

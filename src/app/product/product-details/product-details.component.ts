@@ -6,9 +6,9 @@ import { Lightbox } from 'angular2-lightbox';
 import { Constants } from '../../shared/constants';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
-import { ProductCategoryComponent } from '../product-category/product-category.component';
 import { ProductSetComponent } from '../product-set/product-set.component';
 import { SetModalComponent } from 'app/product/set-modal/set-modal.component';
+import { CategoryModalComponent } from 'app/product/category-modal/category-modal.component';
 
 @Component({
   selector: 'app-product-details',
@@ -133,7 +133,7 @@ export class ProductDetailsComponent implements OnInit {
     const initialState = {
       categoryId: this.prod.CategoryId
     };
-    this.bsModalRef = this.modalService.show(ProductCategoryComponent, { initialState });
+    this.bsModalRef = this.modalService.show(CategoryModalComponent, { initialState });
     this.bsModalRef.content.closeBtnName = 'Close';
     this.modalService.onHidden.subscribe(a => {
       this.http

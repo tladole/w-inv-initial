@@ -128,7 +128,7 @@ import { CategoryModalComponent } from './product/category-modal/category-modal.
     AlertService,
     ConfigurationService
   ],
-  entryComponents: [ProductCategoryComponent, SetModalComponent, AgDropdownGenEditorComponent, AgDateGenEditorComponent],
+  entryComponents: [CategoryModalComponent, SetModalComponent, AgDropdownGenEditorComponent, AgDateGenEditorComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,14 +1,20 @@
-<div class="modal-header">
-    <h4 class="modal-title pull-left">Category</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-<div class="modal-body">
+<div class="container-fluid">
+    <div class="row" style="margin-bottom: 5px">
+      <div class="col-md-3 mr-auto">
+        <h4>Product Category </h4>
+      </div>
+    </div>
     <div class="row" style="margin-bottom: 5px">
         <div class="col-md-3 mr-auto">
+            <input type="text" class="form-control" (input)="onQuickFilterChanged($event)" id="quickFilter" placeholder="quick filter...">
         </div>
-        <div class="pull-right col-md-2">
+        <div class="pull-right col-md-1">
+            <button type="button" class="btn btn-primary" (click)="saveCategory()">Save</button>
+        </div>
+        <div class="pull-right col-md-1">
+            <button type="button" class="btn btn-secondary" (click)="deleteCategory()">Delete</button>
+        </div>
+        <div class="pull-right col-md-1">
             <input type="button" title="Add" class="form-control btn-primary" value="Add" (click)="addRow()">
         </div>
     </div>
@@ -18,8 +24,4 @@
             </ag-grid-angular>
         </div>
     </div>
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-primary" (click)="saveCategory()">Save</button>
-    <button type="button" class="btn btn-secondary" (click)="deleteCategory()">Delete</button>
 </div>

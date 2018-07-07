@@ -1,7 +1,7 @@
 <div class="container-fluid" *ngIf="role">
     <div class="row" style="margin-bottom: 5px">
         <div class="col-md-3 mr-auto">
-            <h4>Role: </h4>
+            <h4>Mission: </h4>
         </div>
         <div class="pull-right col-md-1">
             <input type="button" title="Back" class="form-control btn-primary" value="Back" routerLink="/admin/mission">
@@ -18,12 +18,39 @@
             </div>
         </div>
         <div class="form-row mb-2">
+            <label for="MissionDate" class="col-sm-2 col-form-label">Mission Date:</label>
+            <div class="col-sm-4">
+                <input type="date" name="MissionDate" class="form-control" required [ngModel]="role.MissionDate | date:'yyyy-MM-dd'">
+            </div>
+            <div class="valid-feedback col-sm-4" [style.display]="role.MissionDate?'block':'none'">
+                Looks good!
+            </div>
+        </div>
+        <div class="form-row mb-2">
             <label for="location" class="col-sm-2 col-form-label">Location:</label>
             <div class="col-sm-4">
                 <input type="text" name="location" class="form-control" [(ngModel)]="role.location" required>
             </div>
             <div class="valid-feedback col-sm-4" [style.display]="role.location?'block':'none'">
                 Looks good!
+            </div>
+        </div>
+        <div class="form-row mb-2">
+            <label for="MissionLead" class="col-sm-2 col-form-label">Mission Lead:</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="MissionLead" [(ngModel)]="role.MissionLead">
+                        <option value="" selected>Select</option>
+                          <option *ngFor="let u of users" [value]='u.id'>{{u.UserName}}</option>
+                        </select>
+            </div>
+        </div>
+        <div class="form-row mb-2">
+            <label for="LeadSurgeon" class="col-sm-2 col-form-label">Lead Surgeon:</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="LeadSurgeon" [(ngModel)]="role.LeadSurgeon">
+                        <option value="" selected>Select</option>
+                          <option *ngFor="let u of users" [value]='u.id'>{{u.UserName}}</option>
+                        </select>
             </div>
         </div>
         <div class="form-row mb-2" *ngIf="role.id != -1 && role.modifiedBy">

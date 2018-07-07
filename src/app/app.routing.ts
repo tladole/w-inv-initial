@@ -58,9 +58,7 @@ import { CategoryComponent } from './product/category/category.component';
           { path: 'cases/add', component: CaseDetailsComponent, canActivate: [AuthGuardGuard], data: { title: 'Case' } },
           { path: 'cases/details/:id', component: CaseDetailsComponent, canActivate: [AuthGuardGuard], data: { title: 'Case' } },
 
-          { path: 'category', component: ProductCategoryComponent, canActivate: [AuthGuardGuard], data: { title: 'Category' } },
-          { path: 'category/add', component: CategoryComponent, canActivate: [AuthGuardGuard], data: { title: 'Category' } },
-          { path: 'category/details/:id', component: CategoryComponent, canActivate: [AuthGuardGuard], data: { title: 'Category' } }
+          { path: 'category', component: ProductCategoryComponent, canActivate: [AuthGuardGuard], data: { title: 'Category' } }
         ]
       },
 

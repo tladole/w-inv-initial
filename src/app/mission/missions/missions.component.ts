@@ -10,6 +10,7 @@ import {
   DialogType
 } from '../../shared/service/alert.service';
 import { AuthService } from '../../shared/service/auth.service';
+import { AgDateGenEditorComponent } from 'app/shared/component/ag-date-gen-editor/ag-date-gen-editor.component';
 
 @Component({
   selector: 'app-missions',
@@ -17,8 +18,20 @@ import { AuthService } from '../../shared/service/auth.service';
 })
 export class MissionsComponent implements OnInit {
   columnDefs: ColDef[] = [
-    { headerName: 'Name', field: 'name', editable: true },
-    { headerName: 'Location', field: 'location', editable: true },
+    { headerName: 'Name', field: 'name', editable: true, pinned: true },
+    {
+      headerName: 'Mission Date', field: 'modifiedDate', editable: true, cellEditorFramework: AgDateGenEditorComponent, pinned: true,
+      valueFormatter: data => {
+        const d = new Date(data.value);
+        console.log('day', data.value, d, d.getDate(), d.getDate().toString()[1]);
+        const day = d.getDate().toString()[1] ? d.getDate().toString() : '0' + d.getDate().toString();
+        const month = (d.getMonth() + 1).toString()[1] ? (d.getMonth() + 1).toString() : '0' + (d.getMonth() + 1).toString();
+        return (new Date(data.value)).getFullYear() + '-' + month + '-' + day;
+      }
+    },
+    { headerName: 'Location', field: 'location', editable: true, pinned: true },
+    { headerName: 'Mission Lead', field: 'modifiedBy.UserName' },
+    { headerName: 'Lead Surgeon', field: 'modifiedBy.UserName' },
     { headerName: 'Created By', field: 'modifiedBy.UserName' },
     {
       headerName: 'Modified Date', field: 'modifiedDate',
@@ -35,7 +48,7 @@ export class MissionsComponent implements OnInit {
       suppressMenu: true,
       suppressSorting: true,
       template:
-        `
+      `
         <a href="javascript:void(0);" class="btn-xs btn-link" data-action-type="update" role="button">Make Active</a>
         `
     }
@@ -110,7 +123,7 @@ export class MissionsComponent implements OnInit {
                 this.http.put(Constants.apiUrl + '/mission/' + element.id, JSON.stringify(element), { headers: headers })
                   .subscribe((data3: Mission) => {
                     console.log('product', data3);
-                    this.alertService.showMessage('Save', `Mission '` + data3.name + `' updated successfully.`, MessageSeverity.success);
+                    // this.alertService.showMessage('Save', `Mission '` + data3.name + `' updated successfully.`, MessageSeverity.success);
                     // this.prod = data;
                   });
               }

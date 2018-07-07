@@ -54,25 +54,25 @@ export class InventoryDetailsComponent implements OnInit {
       headerName: 'Department', field: 'DepartmentId', editable: true,
       cellEditorFramework: AgDropdownGenEditorComponent,
       cellEditorParams: params => {
-        return { values: this.teams, valueToShow: 'TeamName' }; //.map(u => u.Name)
+        return { values: this.teams, valueToShow: 'TeamName' }; // .map(u => u.Name)
       },
       valueParser: params => {
         return this.teams.filter(a => a.Name == params.newValue)[0].id;
       },
       valueFormatter: data => {
         const d = this.teams.filter(a => a.id == data.value)[0];
-        return d?d.TeamName:'';
+        return d ? d.TeamName : '';
       },
       getQuickFilterText: params => {
         const d = this.teams.filter(a => a.id == params.value)[0];
-        return d?d.TeamName:'';
+        return d ? d.TeamName : '';
       }
     },
     {
       headerName: 'Warehouse', field: 'WareHouseId', editable: true,
       cellEditorFramework: AgDropdownGenEditorComponent,
       cellEditorParams: params => {
-        return { values: this.warehouse }; //.map(u => u.Name)
+        return { values: this.warehouse }; // .map(u => u.Name)
       },
       valueParser: params => {
         return this.warehouse.filter(a => a.Name == params.newValue)[0].id;
@@ -129,19 +129,25 @@ export class InventoryDetailsComponent implements OnInit {
         this.http
           .get(Constants.apiUrl + '/inventory')
           .subscribe((data: any) => {
-            let records = data.filter(a => a.id == this.prodId);
-            this.CategoryId= this.products.filter(a => a.id == this.prodId)[0].CategoryId;
-            let grouped = data.filter(a => a.productId == records[0].productId).reduce(function (res, obj) {
-              if (!(obj.productId in res))
+            const records = data.filter(a => a.id == this.prodId);
+            this.CategoryId = this.products.filter(a => a.id == this.prodId)[0].CategoryId;
+            const grouped = data.filter(a => a.productId == records[0].productId).reduce(function (res, obj) {
+              if (!(obj.productId in res)) {
                 res.__array.push(res[obj.productId] = obj);
-              else {
-                res[obj.productId].TotalPackagesAvailable = parseInt(res[obj.productId].TotalPackagesAvailable) + parseInt(obj.TotalPackagesAvailable);
-                res[obj.productId].TotalPackagesNeeded = parseInt(res[obj.productId].TotalPackagesNeeded) + parseInt(obj.TotalPackagesNeeded);
-                res[obj.productId].TotalPackagesOutstanding = parseInt(res[obj.productId].TotalPackagesOutstanding) + parseInt(obj.TotalPackagesOutstanding);
+              } else {
+                res[obj.productId].TotalPackagesAvailable
+                  = parseInt(res[obj.productId].TotalPackagesAvailable, 10)
+                  + parseInt(obj.TotalPackagesAvailable, 10);
+                res[obj.productId].TotalPackagesNeeded
+                  = parseInt(res[obj.productId].TotalPackagesNeeded, 10)
+                  + parseInt(obj.TotalPackagesNeeded, 10);
+                res[obj.productId].TotalPackagesOutstanding
+                  = parseInt(res[obj.productId].TotalPackagesOutstanding, 10)
+                  + parseInt(obj.TotalPackagesOutstanding, 10);
               }
               return res;
             }, { __array: [] }).__array
-              .sort(function (a, b) { return parseInt(b.TotalPackagesOutstanding) - parseInt(a.TotalPackagesOutstanding); });
+              .sort(function (a, b) { return parseInt(b.TotalPackagesOutstanding, 10) - parseInt(a.TotalPackagesOutstanding, 10); });
             console.log('grouped', grouped)
             this.prod = grouped[0];
             this.orgProd = Object.assign({}, this.prod);
@@ -165,8 +171,8 @@ export class InventoryDetailsComponent implements OnInit {
     this.http
       .get(Constants.apiUrl + '/inventory')
       .subscribe((data: Inventory[]) => {
-        let rowDataOrg = JSON.parse(JSON.stringify(data));
-        let savingRec = new Array();
+        const rowDataOrg = JSON.parse(JSON.stringify(data));
+        const savingRec = new Array();
         console.log('start save all', this.records, data)
         this.records.forEach(rec => {
           if (rowDataOrg.filter(a => a.id == rec.id).length > 0) {
@@ -181,32 +187,33 @@ export class InventoryDetailsComponent implements OnInit {
             });
           }
         });
-        console.log("bulk save", savingRec)
+        console.log('bulk save', savingRec)
         const headers = new HttpHeaders()
           .append('Content-Type', 'application/json');
         savingRec.forEach(element => {
           this.http.put(Constants.apiUrl + '/inventory/' + element.id, JSON.stringify(element), { headers: headers })
-            .subscribe((data: Inventory) => {
-              console.log('product', data);
+            .subscribe((data1: Inventory) => {
+              console.log('product', data1);
               this.alertService.showMessage('Save', `inventory updated successfully.`, MessageSeverity.success);
-              //this.prod = data;
+              // this.prod = data;
             });
         });
-        this.router.navigate(['inventory']);
+        this.router.navigate(['requisition']);
       });
   }
 
   cancelAll() {
     this.prod = Object.assign({}, this.orgProd);
     console.log(this.prod);
+    this.router.navigate(['requisition']);
   }
 
   deleteProd() {
     this.http.delete(Constants.apiUrl + '/inventory/' + this.prodId)
       .subscribe((data: Inventory) => {
         console.log('product', data);
-        this.router.navigate(['/inventory']);
-        //this.prod = data;
+        this.router.navigate(['/requisition']);
+        // this.prod = data;
       });
 
   }

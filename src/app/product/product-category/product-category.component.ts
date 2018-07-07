@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Constants } from '../../shared/constants';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { DropdownField } from '../../shared/model/dropdown-key.model';
+import { MessageSeverity, AlertService } from 'app/shared/service/alert.service';
 
 @Component({
   selector: 'app-product-category',
@@ -19,7 +19,9 @@ export class ProductCategoryComponent implements OnInit {
     { headerName: 'Product Name', field: 'Name', editable: true }
   ]
 
-  constructor(private http: HttpClient, public bsModalRef: BsModalRef) { }
+  constructor(private http: HttpClient,
+    private alertService: AlertService
+  ) { }
 
   ngOnInit() {
   }
@@ -39,7 +41,7 @@ export class ProductCategoryComponent implements OnInit {
   }
 
   addRow() {
-    let cat = new DropdownField();
+    const cat = new DropdownField();
     cat.id = '-1';
     cat.Name = '';
     this.category.push({ id: '-1', Name: '' });
@@ -49,15 +51,21 @@ export class ProductCategoryComponent implements OnInit {
   }
 
   deleteCategory() {
-    var selectedRows = this.gridApi.getSelectedRows();
+    const selectedRows = this.gridApi.getSelectedRows();
     selectedRows.forEach(selectedRow => {
       this.http.delete(Constants.apiUrl + '/Category/' + selectedRow.id)
         .subscribe((data: DropdownField) => {
           console.log('Category', data);
-          //this.prod = data;
+          this.alertService.showMessage('Delete', `Category '` + selectedRow.Name + `' deleted successfully.`, MessageSeverity.success);
+          this.http
+            .get(Constants.apiUrl + '/category')
+            .subscribe((data1: DropdownField[]) => {
+              console.log('in category', data1)
+              this.category = data1;
+              this.categoryOrg = JSON.parse(JSON.stringify(this.category));
+            });
         });
     });
-    this.bsModalRef.hide();
   }
 
   saveCategory() {
@@ -66,12 +74,13 @@ export class ProductCategoryComponent implements OnInit {
     this.gridApi.stopEditing(false);
     // let a: Observable[] = new Array();
     this.category.forEach(element => {
-      let catId = this.categoryOrg.filter(a => a.id == element.id && a.Name != element.Name && element.Name != '');
+      const catId = this.categoryOrg.filter(a => a.id == element.id && a.Name != element.Name && element.Name != '');
       if (catId.length > 0) {
         this.http.put(Constants.apiUrl + '/Category/' + element.id, JSON.stringify(element), { headers: headers })
           .subscribe((data: DropdownField) => {
             console.log('Category', data);
-            //this.prod = data;
+            this.alertService.showMessage('Delete', `Category '` + data.Name + `' updated successfully.`, MessageSeverity.success);
+            // this.prod = data;
           });
       } else if (element.id == '-1') {
         console.log(element);
@@ -83,11 +92,11 @@ export class ProductCategoryComponent implements OnInit {
             console.log(element);
             this.http.post(Constants.apiUrl + '/Category', JSON.stringify(element), { headers: headers })
               .subscribe((data1: DropdownField) => {
+                this.alertService.showMessage('Delete', `Category '` + data1.Name + `' added successfully.`, MessageSeverity.success);
                 console.log('Category saved', data);
               });
           });
       }
     });
-    this.bsModalRef.hide();
   }
 }

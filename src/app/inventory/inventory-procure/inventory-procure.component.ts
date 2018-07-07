@@ -51,7 +51,7 @@ export class InventoryProcureComponent implements OnInit {
       });
     this.prods = new ProcurementSetView();
     this.prods.procuments = new Array();
-    let a = new ProcurementDetailsView();
+    const a = new ProcurementDetailsView();
     a.procurementId = this.prods.procuments.length;
     a.orderNo = 0;
     a.inventory = new Inventory();
@@ -80,8 +80,8 @@ export class InventoryProcureComponent implements OnInit {
       this.http.put(Constants.apiUrl + '/inventory/' + this.prodId, JSON.stringify(this.prod), { headers: headers })
         .subscribe((data: Inventory) => {
           console.log('product', data);
-          this.router.navigate(['/inventory']);
-          //this.prod = data;
+          this.router.navigate(['requisition']);
+          // this.prod = data;
         });
     } else {
       console.log(this.prod);
@@ -94,7 +94,7 @@ export class InventoryProcureComponent implements OnInit {
           this.http.post(Constants.apiUrl + '/inventory', JSON.stringify(this.prod), { headers: headers })
             .subscribe((data1: Inventory) => {
               console.log('product saved', data);
-              this.router.navigate(['/inventory']);
+              this.router.navigate(['requisition']);
             });
         });
     }
@@ -103,54 +103,52 @@ export class InventoryProcureComponent implements OnInit {
   cancelAll() {
     this.prod = Object.assign({}, this.orgProd);
     console.log(this.prod);
+    this.router.navigate(['requisition']);
   }
 
   deleteProd() {
     this.http.delete(Constants.apiUrl + '/inventory/' + this.prodId)
       .subscribe((data: Inventory) => {
         console.log('product', data);
-        this.router.navigate(['/inventory']);
-        //this.prod = data;
+        this.router.navigate(['requisition']);
+        // this.prod = data;
       });
 
   }
   addInv() {
     console.log(this.prods)
-    let a = new ProcurementDetailsView();
+    const a = new ProcurementDetailsView();
     a.procurementId = this.prods.procuments.length;
     a.orderNo = 0;
     a.inventory = new Inventory();
     this.prods.procuments.push(a);
-    this.prods.procuments.sort((a, b) => {
-      if (a.procurementId < b.procurementId) return -1;
-      else if (a.procurementId > b.procurementId) return 1;
-      else return 0;
+    this.prods.procuments.sort((a1, b) => {
+      if (a1.procurementId < b.procurementId) { return -1; } else if (a1.procurementId > b.procurementId) { return 1; } else { return 0; }
     });
   }
 
   AddTeam(pro: ProcurementDetailsView) {
-    let a = new ProcurementDetailsView();
+    const a = new ProcurementDetailsView();
     a.procurementId = pro.procurementId;
-    a.orderNo = this.prods.procuments.filter(a => a.procurementId == pro.procurementId).length;
+    a.orderNo = this.prods.procuments.filter(a1 => a.procurementId == pro.procurementId).length;
     a.inventory = new Inventory();
     this.prods.procuments.push(a);
-    this.prods.procuments.sort((a, b) => {
-      if (a.procurementId < b.procurementId) return -1;
-      else if (a.procurementId > b.procurementId) return 1;
-      else return 0;
+    this.prods.procuments.sort((a1, b) => {
+      if (a1.procurementId < b.procurementId) { return -1; } else if (a1.procurementId > b.procurementId) { return 1; } else { return 0; }
     });
   }
 
   onChange(event: any, pro: ProcurementDetailsView) {
     console.log(pro, event)
     pro.inventory.TotalPackagesOutstanding = parseFloat(event.target.value);
-    let bb = null;
-    var result = 0;
+    const bb = null;
+    let result = 0;
     this.prods.procuments.filter(a => a.procurementId == pro.procurementId && a.orderNo != 0)
       .map(item => item.inventory.TotalPackagesOutstanding)
       .forEach((val) => result += val);
     console.log(this.prods.procuments.filter(a => a.procurementId == pro.procurementId && a.orderNo == 0), result)
-    this.prods.procuments.filter(a => a.procurementId == pro.procurementId && a.orderNo == 0)[0].inventory.TotalPackagesOutstanding = result;
+    this.prods.procuments
+      .filter(a => a.procurementId == pro.procurementId && a.orderNo == 0)[0].inventory.TotalPackagesOutstanding = result;
 
   }
 }

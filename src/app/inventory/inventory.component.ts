@@ -87,7 +87,7 @@ export class InventoryComponent implements OnInit {
       }
       selectedRowsString += selectedRow.model;
     });
-    this.router.navigate(['inventory/details/', selectedRows[0].id]);
+    this.router.navigate(['requisition/details/', selectedRows[0].id]);
   }
 
   onGridReady(params) {

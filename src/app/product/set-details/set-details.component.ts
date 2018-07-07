@@ -6,6 +6,7 @@ import { Constants } from 'app/shared/constants';
 import { Product } from 'app/shared/model/product.model';
 import { ColDef } from 'ag-grid';
 import { AgDropdownGenEditorComponent } from 'app/shared/component/ag-dropdown-gen-editor/ag-dropdown-gen-editor.component';
+import { User } from 'app/shared/model/admin/user.model';
 
 @Component({
   selector: 'app-set-details',
@@ -13,6 +14,7 @@ import { AgDropdownGenEditorComponent } from 'app/shared/component/ag-dropdown-g
   styleUrls: ['./set-details.component.css']
 })
 export class SetDetailsComponent implements OnInit {
+  UserName: string;
   productsetInv: any[];
   rowDataOrg: any;
   rowData: any[];
@@ -162,18 +164,36 @@ export class SetDetailsComponent implements OnInit {
       if (this.prodId) {
         this.http.get(Constants.apiUrl + '/productset/' + this.prodId)
           .subscribe((data: ProductSet) => {
-            console.log('product recieved', data);
+            console.log('productset recieved', data);
             this.prod = data;
             this.orgProd = Object.assign({}, this.prod);
             this.http
-              .get(Constants.apiUrl + '/productset')
+                  .get(Constants.apiUrl + '/users/' + this.prod.CreatedBy)
+                  .subscribe((data1: User) => {
+                    console.log('productset', data1);
+                    this.UserName = data1.UserName;
+                  });
+            this.http
+              .get(Constants.apiUrl + '/products')
               .subscribe((data1: any) => {
                 console.log('productset', data1);
-                this.productset = data1.filter(a => a.productId == this.prod.id);
+                this.rowData = data1;
+                if (this.prod.ProductsUnits) {
+                  this.productset = data1.filter(a => this.prod.ProductsUnits.some(b => b.product === a.id));
+                } else {
+                  this.productset = new Array();
+                }
               });
           });
       } else {
         this.prod = new ProductSet();
+        this.productset = new Array();
+        this.http
+              .get(Constants.apiUrl + '/products')
+              .subscribe((data1: any) => {
+                console.log('productset', data1);
+                this.rowData = data1;
+              });
       }
     });
   }
@@ -181,27 +201,10 @@ export class SetDetailsComponent implements OnInit {
   onProdGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    this.rowData = new Array();
-
-    this.http
-      .get(Constants.apiUrl + '/products')
-      .subscribe((data: Product[]) => {
-        this.rowData = data;
-        this.rowDataOrg = JSON.parse(JSON.stringify(data));
-        this.gridApi.sizeColumnsToFit();
-      });
   }
   onInvGridReady(params) {
     this.invGridApi = params.api;
     this.invGridColumnApi = params.columnApi;
-    this.productsetInv = new Array();
-
-    this.http
-      .get(Constants.apiUrl + '/productset/' + 1)
-      .subscribe((data: ProductSet) => {
-        this.productsetInv = data.ProductsUnits;
-        this.gridApi.sizeColumnsToFit();
-      });
   }
 
 
