@@ -29,7 +29,7 @@ export class TeamsComponent implements OnInit {
   private gridColumnApi;
   rowData: any;
   public rowSelection;
-  private users: any;
+  public users: any;
 
   public constructor(private http: HttpClient, private router: Router) {
   }

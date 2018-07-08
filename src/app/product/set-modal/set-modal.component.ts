@@ -182,6 +182,8 @@ export class SetModalComponent implements OnInit {
     }
   }
 
+  addRow() { }
+
   onProdGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;

@@ -40,6 +40,8 @@ export class ProductCategoryComponent implements OnInit {
       });
   }
 
+  onQuickFilterChanged(event) { }
+
   addRow() {
     const cat = new DropdownField();
     cat.id = '-1';

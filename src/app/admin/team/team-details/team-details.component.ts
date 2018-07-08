@@ -13,7 +13,7 @@ export class TeamDetailsComponent implements OnInit {
   team: Team;
   orgProd: Team;
   teamId: number;
-  users: User[];
+  public users: User[];
 
   constructor(private http: HttpClient, private router: Router, private activeRoute: ActivatedRoute) {
   }
@@ -46,31 +46,34 @@ export class TeamDetailsComponent implements OnInit {
     });
   }
 
+  onQuickFilterChanged(event) { }
+
   saveTeam() {
     const headers = new HttpHeaders()
       .append('Content-Type', 'application/json');
-    let r: any = Object.assign({}, this.team);
+    const r: any = Object.assign({}, this.team);
     r.CreatedBy = this.team.CreatedBy.id;
     if (this.teamId) {
       this.http.put(Constants.apiUrl + '/teams/' + this.teamId, JSON.stringify(r), { headers: headers })
         .subscribe((data: Team) => {
           console.log('product', data);
           if (r.TeamLead) {
-            let user = this.users.filter(a => a.id == r.TeamLead)[0];
+            const user = this.users.filter(a => a.id == r.TeamLead)[0];
             if (!user.Team || (user && user.Team.filter(a => a.TeamLead == r.TeamLead).length == 0)) {
-              if (!user.Team)
+              if (!user.Team) {
                 user.Team = new Array();
+              }
               user.Team.push(r.id);
               this.http.put(Constants.apiUrl + '/users/' + r.TeamLead, JSON.stringify(user), { headers: headers })
-                .subscribe((data: Team) => {
-                  console.log('product', data);
+                .subscribe((data1: Team) => {
+                  console.log('product', data1);
                   this.router.navigate(['/admin/teams']);
-                  //this.prod = data;
+                  // this.prod = data;
                 });
             }
           }
           this.router.navigate(['/admin/teams']);
-          //this.prod = data;
+          // this.prod = data;
         });
     } else {
       console.log(this.team);
@@ -89,15 +92,16 @@ export class TeamDetailsComponent implements OnInit {
             .subscribe((data1: Team) => {
               console.log('product saved', data);
               if (r.TeamLead) {
-                let user = this.users.filter(a => a.id == r.TeamLead)[0];
-                if (!user.Team)
+                const user = this.users.filter(a => a.id == r.TeamLead)[0];
+                if (!user.Team) {
                   user.Team = new Array();
+                }
                 user.Team.push(r.id);
                 this.http.put(Constants.apiUrl + '/users/' + r.TeamLead, JSON.stringify(user), { headers: headers })
-                  .subscribe((data: Team) => {
-                    console.log('product', data);
+                  .subscribe((data2: Team) => {
+                    console.log('product', data2);
                     this.router.navigate(['/admin/teams']);
-                    //this.prod = data;
+                    // this.prod = data;
                   });
               }
               this.router.navigate(['/admin/teams']);
@@ -117,7 +121,7 @@ export class TeamDetailsComponent implements OnInit {
       .subscribe((data: Team) => {
         console.log('product', data);
         this.router.navigate(['/admin/teams']);
-        //this.prod = data;
+        // this.prod = data;
       });
 
   }

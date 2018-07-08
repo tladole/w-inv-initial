@@ -1,14 +1,14 @@
-import { AfterViewInit, Component, ViewChild, ViewContainerRef } from "@angular/core";
-import { ICellEditorAngularComp } from "ag-grid-angular";
+import { AfterViewInit, Component, ViewChild, ViewContainerRef } from '@angular/core';
+import { ICellEditorAngularComp } from 'ag-grid-angular';
 
 @Component({
   selector: 'app-ag-dropdown-gen-editor',
   templateUrl: './ag-dropdown-gen-editor.component.html'
 })
 export class AgDropdownGenEditorComponent implements ICellEditorAngularComp, AfterViewInit {
-  private params: any;
+  public params: any;
   public value: string;
-  private cancelBeforeStart: boolean = false;
+  private cancelBeforeStart = false;
 
   @ViewChild('input', { read: ViewContainerRef }) public input;
   valueToShow: string;
@@ -17,7 +17,7 @@ export class AgDropdownGenEditorComponent implements ICellEditorAngularComp, Aft
     this.params = params;
     this.value = this.params.value;
     this.valueToShow = this.params.valueToShow;
-    console.log("in custom edit", this)
+    console.log('in custom edit', this)
     // only start edit if key pressed is a number, not a letter
     // this.cancelBeforeStart = params.charPress && ('1234567890'.indexOf(params.charPress) < 0);
   }
@@ -55,7 +55,7 @@ export class AgDropdownGenEditorComponent implements ICellEditorAngularComp, Aft
 
   private getCharCodeFromEvent(event): any {
     event = event || window.event;
-    return (typeof event.which == "undefined") ? event.keyCode : event.which;
+    return (typeof event.which == 'undefined') ? event.keyCode : event.which;
   }
 
   private isCharNumeric(charStr): boolean {
